@@ -27,7 +27,9 @@ def vote(request, question_id):
     # print(request.POST['choice'])
     question = get_object_or_404(Question, pk=question_id)
     try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        increment_choice = question.choice_set.get(pk=request.POST['inc_choice'])
+        decrement_choice = question.choice_set.get(pk=request.POST['dec_choice'])
+        
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'lists/detail.html', {
@@ -35,8 +37,10 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        increment_choice.votes += 1
+        decrement_choice.votes -= 1
+        increment_choice.save()
+        decrement_choice.save()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.

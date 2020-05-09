@@ -9,15 +9,18 @@
 </p>
 {% endif %}
 
+<div class="container">
 <form id="list" action="{% url 'lists:vote' question.id %}" method="post">
 	{% csrf_token %}
 	{% with len=question.choice_set.all.count %}
+	<div class="row">
+		<div class="col-sm">
 	{% for choice in question.choice_set.all %}
 		{% if choice.votes == 0 %}
-			<div class="form-check">
+			<div class="form-group">
 				<input
-					type="radio"
-					name="choice"
+					type="checkbox"
+					name="inc_choice"
 					class="form-check-input"
 					id="0"
 					value="{{ choice.id }}"
@@ -27,13 +30,13 @@
 				>
 			</div>
 		{% else %}
-			<div class="form-check">
+			<div class="form-group">
 				<input
-					onclick="disableButtons(id, '{{ len }}')"
-					type="radio"
-					name="choice"
+					onclick="disableButtons(id, '{{ len }}', 'inc')"
+					type="checkbox"
+					name="inc_choice"
 					class="form-check-input"
-					id="{{ forloop.counter }}"
+					id="inc{{ forloop.counter }}"
 					value="{{ choice.id }}"
 				/>
 				<label for="{{ forloop.counter }}">{{ choice.choice_text }}</label
@@ -41,6 +44,40 @@
 			</div>
 		{% endif %}
 	{% endfor %}
+</div>
+	<div class="col-sm">
+	{% for choice in question.choice_set.all %}
+		{% if choice.votes == 0 %}
+			<div class="form-group">
+				<input
+					type="checkbox"
+					name="dec_choice"
+					class="form-check-input"
+					id="0"
+					value="{{ choice.id }}"
+					disabled
+				/>
+				<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label
+				>
+			</div>
+		{% else %}
+			<div class="form-group">
+				<input
+					onclick="disableButtons(id, '{{ len }}', 'dec')"
+					type="checkbox"
+					name="dec_choice"
+					class="form-check-input"
+					id="dec{{ forloop.counter }}"
+					value="{{ choice.id }}"
+				/>
+				<label for="{{ forloop.counter }}">{{ choice.choice_text }}</label
+				>
+			</div>
+		{% endif %}
+	{% endfor %}
+</div>
+</div>
+</div>
 	<input type='reset' onclick="reset_function('{{ len }}')" value="reset" />
 	<input type="submit" value="Vote" class="btn btn-success btn-lg btn-block mt-4" />
 	{% endwith %}
