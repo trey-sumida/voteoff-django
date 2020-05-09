@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [
+    r"C:\Users\treys\OneDrive\Documents\GitHub\django-practice\voteOff\static"
+]
 
 # Application definition
 
