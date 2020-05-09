@@ -1,14 +1,15 @@
-  
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-<div class="card text-center">
-  <div class="card-body">
-    <h1>Welcome To VoteOff</h1>
-    <p>This is an example Django VoteOff app</p>
+<div class="container" id="home-div">
+    <h1 id="home">Welcome To VoteOff</h1>
+    <p>Vote off is the exciting twist to voting. Rather than voting for your favorite option, you also have the opportunity
+      to vote down another option at the same time. 
+    </p>
     <a class="btn btn-dark" href="{% url 'lists:index' %}">
         View Available Votes</a
       >
-  </div>
-  </div>
+</div>
+
 {% endblock %}
