@@ -19,7 +19,7 @@
 		{% if choice.votes == 0 %}
 			<div class="form-group">
 				<input
-					type="checkbox"
+					type="radio"
 					name="inc_choice"
 					class="form-check-input"
 					id="0"
@@ -33,7 +33,7 @@
 			<div class="form-group">
 				<input
 					onclick="disableButtons(id, '{{ len }}', 'inc')"
-					type="checkbox"
+					type="radio"
 					name="inc_choice"
 					class="form-check-input"
 					id="inc{{ forloop.counter }}"
@@ -50,7 +50,7 @@
 		{% if choice.votes == 0 %}
 			<div class="form-group">
 				<input
-					type="checkbox"
+					type="radio"
 					name="dec_choice"
 					class="form-check-input"
 					id="0"
@@ -64,7 +64,7 @@
 			<div class="form-group">
 				<input
 					onclick="disableButtons(id, '{{ len }}', 'dec')"
-					type="checkbox"
+					type="radio"
 					name="dec_choice"
 					class="form-check-input"
 					id="dec{{ forloop.counter }}"
