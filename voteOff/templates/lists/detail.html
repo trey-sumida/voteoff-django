@@ -9,8 +9,9 @@
 </p>
 {% endif %}
 
-<form action="{% url 'lists:vote' question.id %}" method="post">
-	{% csrf_token %} 
+<form id="list" action="{% url 'lists:vote' question.id %}" method="post">
+	{% csrf_token %}
+	{% with len=question.choice_set.all.count %}
 	{% for choice in question.choice_set.all %}
 		{% if choice.votes == 0 %}
 			<div class="form-check">
@@ -18,7 +19,7 @@
 					type="radio"
 					name="choice"
 					class="form-check-input"
-					id="choice{{ forloop.counter }}"
+					id="0"
 					value="{{ choice.id }}"
 					disabled
 				/>
@@ -28,17 +29,20 @@
 		{% else %}
 			<div class="form-check">
 				<input
+					onclick="disableButtons(id, '{{ len }}')"
 					type="radio"
 					name="choice"
 					class="form-check-input"
-					id="choice{{ forloop.counter }}"
+					id="{{ forloop.counter }}"
 					value="{{ choice.id }}"
 				/>
-				<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label
+				<label for="{{ forloop.counter }}">{{ choice.choice_text }}</label
 				>
 			</div>
 		{% endif %}
 	{% endfor %}
+	<input type='reset' onclick="reset_function('{{ len }}')" value="reset" />
 	<input type="submit" value="Vote" class="btn btn-success btn-lg btn-block mt-4" />
+	{% endwith %}
 </form>
 {% endblock %}
