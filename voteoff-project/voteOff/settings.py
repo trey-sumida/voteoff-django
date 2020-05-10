@@ -28,13 +28,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [
-    r"C:\Users\treys\OneDrive\Documents\GitHub\django-practice\voteOff\static"
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
     'lists.apps.ListsConfig',
+    'pages.apps.PagesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

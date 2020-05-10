@@ -1,0 +1,13 @@
+.general-background {
+    padding-top: 3rem;
+}
+
+.navbar-content {
+    padding-left: 3rem;
+}
+
+#home-div {
+    color: gold;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
