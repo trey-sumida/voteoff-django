@@ -13,7 +13,8 @@
 		{% csrf_token %}
 		{% with len=question.choice_set.all.count %}
 		<div class="row">
-			<div class="col-sm" id="add">
+			<div class="col-md-6">
+			<div class="col-sm options">
 				<h2>choose one of the following to add a point to:</h2>
 				<hr/>
 				{% for choice in question.choice_set.all %}
@@ -21,7 +22,7 @@
 				<div class="form-group">
 					<input type="radio" name="inc_choice" class="form-check-input" id="0" value="{{ choice.id }}"
 						disabled />
-					<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
 				</div>
 				{% else %}
 				<div class="form-group">
@@ -32,8 +33,10 @@
 				{% endif %}
 				{% endfor %}
 			</div>
+		</div>
 
-			<div class="col-sm" id="remove">
+			<div class="col-md-6">
+			<div class="col-sm options">
 				<h2>choose one of the following to remove a point from:</h2>
 				<hr/>
 				{% for choice in question.choice_set.all %}
@@ -41,7 +44,7 @@
 				<div class="form-group">
 					<input type="radio" name="dec_choice" class="form-check-input" id="0" value="{{ choice.id }}"
 						disabled />
-					<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
 				</div>
 				{% else %}
 				<div class="form-group">
@@ -53,10 +56,15 @@
 				{% endfor %}
 			</div>
 		</div>
-
-<input type='reset' onclick="reset_function('{{ len }}')" value="reset" />
-<input type="submit" value="Vote" class="btn btn-success btn-lg btn-block mt-4" />
+		</div>
+<div class="button-div">
+<button id="rv" class="btn btn-danger" type="reset" onclick="reset_function('{{ len }}')">Reset</button>
+<br/>
+<br/>
+<button id="rv" type="submit" class="btn btn-success">Vote</button>
+</div>
 {% endwith %}
 </form>
+<br/>
 <a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' %}">Back To Lists</a>
 {% endblock %}
