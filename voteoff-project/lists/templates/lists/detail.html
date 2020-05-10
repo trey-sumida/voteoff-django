@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' %}">Back To Lists</a>
 <h1 class="text-center mb-3">{{ question.question_text }}</h1>
 
 {% if error_message %}
@@ -16,6 +15,7 @@
 		<div class="row">
 			<div class="col-sm" id="add">
 				<h2>choose one of the following to add a point to:</h2>
+				<hr/>
 				{% for choice in question.choice_set.all %}
 				{% if choice.votes == 0 %}
 				<div class="form-group">
@@ -32,8 +32,10 @@
 				{% endif %}
 				{% endfor %}
 			</div>
+
 			<div class="col-sm" id="remove">
 				<h2>choose one of the following to remove a point from:</h2>
+				<hr/>
 				{% for choice in question.choice_set.all %}
 				{% if choice.votes == 0 %}
 				<div class="form-group">
@@ -56,4 +58,5 @@
 <input type="submit" value="Vote" class="btn btn-success btn-lg btn-block mt-4" />
 {% endwith %}
 </form>
+<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' %}">Back To Lists</a>
 {% endblock %}
