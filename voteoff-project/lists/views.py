@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
 from .models import Question, Choice
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from .forms import RegisterForm
 
 # Get quesitons and display them
 def index(request):
@@ -32,8 +32,7 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
         increment_choice = question.choice_set.get(pk=request.POST['inc_choice'])
-        decrement_choice = question.choice_set.get(pk=request.POST['dec_choice'])
-        
+        decrement_choice = question.choice_set.get(pk=request.POST['dec_choice'])      
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'lists/detail.html', {
@@ -52,19 +51,18 @@ def vote(request, question_id):
 
 # Register
 def registeracc(request):
-    if request.method == 'GET':
-        return render(request, 'lists/register.html', {'form':UserCreationForm()})
-    else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(request.POST['username'], request.POST['password1'])
-                user.save()
-                login(request, user)
-                return redirect('index')
-            except IntegrityError:
-                return render(request, 'lists/register.html', {'form':UserCreationForm(), 'error': 'Username already taken'})
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = authenticate(request, username=request.POST['username'], password=request.POST['password1'])
+            login(request, user)
+            return redirect('index')
         else:
-            return render(request, 'lists/register.html', {'form':UserCreationForm(), 'error': 'Password do not match'})
+            return render(request, 'lists/register.html', {'form': form, 'error': form.errors})
+    else:
+        form = RegisterForm()
+        return render(request, 'lists/register.html', {'form': form})
 
 def logoutuser(request):
     if request.method == 'POST':
