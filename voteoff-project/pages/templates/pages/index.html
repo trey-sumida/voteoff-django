@@ -2,12 +2,16 @@
 {% block content %}
 
 <div id="home-div">
-    <h1>Welcome To VoteOff</h1>
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium repudiandae accusantium ducimus delectus aliquam non recusandae modi ex deserunt animi.
-    </p>
-    <a class="btn btn-dark" href="{% url 'lists:index' %}">
-        View Available Votes</a>
+  <h1>Welcome To VoteOff</h1>
+  <p>
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium repudiandae accusantium ducimus delectus
+    aliquam non recusandae modi ex deserunt animi.
+  </p>
+  <a class="btn btn-dark" href="{% url 'lists:index' %}">
+    View Available Votes</a>
+  {% if user.is_authenticated %}
+  <h1>Logged in as {{ user.username }}</h1>
+  {% endif %}
 </div>
 
 {% endblock %}

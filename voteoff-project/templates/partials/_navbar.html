@@ -2,4 +2,13 @@
         <div class="navbar-content">
                 <a class="navbar-brand" href='/'>VoteOff</a>
         </div>
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'lists:logoutuser' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+        </form>
+        {% else %}
+        <a href="register">sign-up/log-in</a>
+        {% endif %}
 </div>

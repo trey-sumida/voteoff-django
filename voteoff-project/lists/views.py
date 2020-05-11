@@ -5,7 +5,7 @@ from .models import Question, Choice
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 # Get quesitons and display them
 def index(request):
@@ -65,3 +65,8 @@ def registeracc(request):
                 return render(request, 'lists/register.html', {'form':UserCreationForm(), 'error': 'Username already taken'})
         else:
             return render(request, 'lists/register.html', {'form':UserCreationForm(), 'error': 'Password do not match'})
+
+def logoutuser(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('index')

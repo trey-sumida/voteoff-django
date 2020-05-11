@@ -7,12 +7,16 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+<h1>You are already logged in!</h1>
+{% else %}
 <h1>Register</h1>
 <h1>{{ error }}</h1>
 <form method="POST">
-{% csrf_token %}
+    {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Register</button>
 </form>
+{% endif %}
 
 {% endblock %}
