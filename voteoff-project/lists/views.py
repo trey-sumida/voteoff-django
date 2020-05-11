@@ -73,11 +73,11 @@ def logoutuser(request):
 
 def loginuser(request):
     if request.method == 'GET':
-        return render(request, 'lists/register.html', {'form':AuthenticationForm()})
+        return render(request, 'lists/login.html', {'form':AuthenticationForm()})
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'lists/register.html', {'form':AuthenticationForm(), 'error':'Username and password did not match'})
+            return render(request, 'lists/login.html', {'form':AuthenticationForm(), 'error':'Username and password did not match'})
         else:
             login(request, user)
             return redirect('index')
