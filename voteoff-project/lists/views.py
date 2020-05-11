@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
 from .models import Question, Choice
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from django.contrib.auth import login
 
 # Get quesitons and display them
 def index(request):
@@ -49,5 +52,16 @@ def vote(request, question_id):
 
 # Register
 def registeracc(request):
-
-    return render(request, 'lists/register.html', {'form':UserCreationForm()}) 
+    if request.method == 'GET':
+        return render(request, 'lists/register.html', {'form':UserCreationForm()})
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = User.objects.create_user(request.POST['username'], request.POST['password1'])
+                user.save()
+                login(request, user)
+                return redirect('index')
+            except IntegrityError:
+                return render(request, 'lists/register.html', {'form':UserCreationForm(), 'error': 'Username already taken'})
+        else:
+            return render(request, 'lists/register.html', {'form':UserCreationForm(), 'error': 'Password do not match'})
