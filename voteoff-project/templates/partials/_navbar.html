@@ -15,15 +15,16 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                         <a href="#" class="dropdown-item">Settings</a>
                                         <div class="dropdown-divider"></div>
-                                        <form action="{% url 'lists:logoutuser' %}" method="POST">
+                                        <a href="#" class="dropdown-item" onClick="document.getElementById('logoutform').submit()">Logout</a>
+                                        <form id="logoutform" action="{% url 'lists:logoutuser' %}" method="POST">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-link">Logout</button>
+                                                <input type="hidden">
                                         </form>
                                 </div>
                         </li>
                 {% else %}
                         <li class="nav-item">
-                                <a href="login">Login/Register</a>
+                                <a class="nav-link" href="login">Login/Register</a>
                         </li>
                 {% endif %}
         </ul>
