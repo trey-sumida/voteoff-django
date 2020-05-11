@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
 from .models import Question, Choice
+from django.contrib.auth.forms import UserCreationForm
 
 # Get quesitons and display them
 def index(request):
@@ -45,3 +46,8 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('lists:results', args=(question.id,)))
+
+# Register
+def registeracc(request):
+
+    return render(request, 'lists/register.html', {'form':UserCreationForm()}) 
