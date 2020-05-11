@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
 from .models import Question, Choice
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 
 # Get quesitons and display them
 def index(request):
@@ -70,3 +70,14 @@ def logoutuser(request):
     if request.method == 'POST':
         logout(request)
         return redirect('index')
+
+def loginuser(request):
+    if request.method == 'GET':
+        return render(request, 'lists/register.html', {'form':AuthenticationForm()})
+    else:
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'lists/register.html', {'form':AuthenticationForm(), 'error':'Username and password did not match'})
+        else:
+            login(request, user)
+            return redirect('index')

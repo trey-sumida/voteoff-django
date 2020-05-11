@@ -4,6 +4,7 @@ from . import views
 app_name = 'lists'
 urlpatterns = [
     path('register/', views.registeracc, name="registeracc"),
+    path('login/', views.loginuser, name="loginuser"),
     path('logout/', views.logoutuser, name="logoutuser"),
     path('lists/', views.index, name='index'),
     path('lists/<int:question_id>/', views.detail, name='detail'),
