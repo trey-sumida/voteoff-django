@@ -1,17 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
+<br />
+<br />
+<br />
+<br />
 
 <div id="home-div">
-  <h1>Welcome To VoteOff</h1>
-  <p>
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium repudiandae accusantium ducimus delectus
-    aliquam non recusandae modi ex deserunt animi.
-  </p>
-  <a class="btn btn-dark" href="{% url 'lists:index' %}">
-    View Available Votes</a>
-  {% if user.is_authenticated %}
-  <h1>Logged in as {{ user.username }}</h1>
-  {% endif %}
+  <h1 class="headers">Welcome To VoteOff</h1>
+  <hr class="divider" />
+  <div class="row">
+    <div class="col-sm" id="home-desc">
+      <h2 class="headers">What is VoteOff?</h2>
+      <hr class="divider" id="subdiv" />
+      <p class="home-description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto nesciunt vel fuga quidem debitis hic blanditiis
+        impedit laborum eius cum porro et perspiciatis, ratione aliquam autem quisquam quos voluptas vero?</p>
+    </div>
+    <div class="col-sm" id="view">
+      <a class="btn btn-primary" href="{% url 'lists:index' %}">
+        View Available Votes</a>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
