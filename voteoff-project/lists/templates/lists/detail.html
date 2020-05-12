@@ -12,7 +12,7 @@
 </p>
 {% endif %}
 
-	<form id="list" action="{% url 'lists:vote' question.id %}" method="post">
+	<form id="list" action="{% url 'lists:vote' question.id %}" method="POST">
 		{% csrf_token %}
 		{% with len=question.choice_set.all.count %}
 		<div class="row">
