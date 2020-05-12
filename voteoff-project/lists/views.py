@@ -93,11 +93,20 @@ def loginuser(request):
             return redirect('index')
 
 def mylists(request):
-    if request.user.is_authenticated:
-        user_questions = Question.objects.filter(creator=request.user)
-        return render(request, 'lists/mylists.html', {'user_questions':user_questions})
-    else:
-        return render(request, 'lists/mylists.html')
+    my_questions = Question.objects.filter(creator=request.user)
+    latest_question_list = my_questions.all().order_by('-pub_date')
+    paginator = Paginator(latest_question_list, 5)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
+    try:
+        questions = paginator.page(page)
+    except:
+        questions = paginator.page(paginator.num_pages)
+
+    return render(request, 'lists/mylists.html', {'questions': questions})
 
 def createlist(request):
     if request.method == 'GET':

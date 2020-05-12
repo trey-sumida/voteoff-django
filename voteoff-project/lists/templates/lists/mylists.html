@@ -4,19 +4,35 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
 {% endblock %}
 {% block content %}
-
-{% if user.is_authenticated %}
-    <h1 class="text-center mb-3">Lists</h1>
-    <ul>
-        {% if user_questions %}
-            {% for question in user_questions %}
-                <li>{{ question.question_text }}</li>
-            {% endfor %}
-        {% else %}
-            <h1>You have no lists</h1>
-        {% endif %}
-    </ul>
+<h1 class="text-center mb-3">My Lists</h1>
+{% if questions %}
+    {% for question in questions.object_list %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="lead">{{ question.question_text }}</p>
+                <a href="{% url 'lists:detail' question.id %}" class="btn-primary btn-sm">Vote Now</a>
+                <a href="{% url 'lists:results' question.id %}" class="btn-primary btn-sm">Results</a>
+            </div>
+        </div>
+    {% endfor %}
 {% else %}
-    <h1>Please log in to view your lists</h1>
+    <p>No lists available</p>
 {% endif %}
+<nav>
+    <ul class="pagination">
+    {% if questions.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ questions.previous_page_number }}">Previous</a></li>
+    {% endif %}
+    {% for pg in questions.paginator.page_range %}
+        {% if questions.number == pg %}
+            <li class="page-item active"><a class="page-link" href="?page={{ pg }}">{{ pg }}</a></li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ pg }}">{{ pg }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if questions.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ questions.next_page_number }}">Next</a></li>
+    {% endif %}
+    </ul>
+</nav>
 {% endblock %}
