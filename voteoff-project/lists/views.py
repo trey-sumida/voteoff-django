@@ -9,7 +9,8 @@ from .forms import RegisterForm
 
 # Get quesitons and display them
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    user_questions = Question.objects.filter(public=True)
+    latest_question_list = user_questions.order_by('-pub_date')[:5]
     context = {'latest_question_list': latest_question_list}
     return render(request, 'lists/index.html', context)
 
