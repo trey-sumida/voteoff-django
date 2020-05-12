@@ -13,7 +13,7 @@
                         <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{ user.username }}</a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="#" class="dropdown-item">Settings</a>
+                                        <a href="/lists/mylists" class="dropdown-item">MyLists</a>
                                         {% if user.is_superuser %}
                                         <a href="/admin" class="dropdown-item">Admin</a>
                                         {% endif %}

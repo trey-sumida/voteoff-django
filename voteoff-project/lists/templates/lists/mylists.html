@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
+{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1 class="text-center mb-3">Lists</h1>
+    <ul>
+        {% if user_questions %}
+            {% for question in user_questions %}
+                <li>{{ question.question_text }}</li>
+            {% endfor %}
+        {% else %}
+            <h1>You have no lists</h1>
+        {% endif %}
+    </ul>
+{% else %}
+    <h1>Please log in to view your lists</h1>
+{% endif %}
+{% endblock %}

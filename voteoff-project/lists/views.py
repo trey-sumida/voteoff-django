@@ -79,3 +79,10 @@ def loginuser(request):
         else:
             login(request, user)
             return redirect('index')
+
+def mylists(request):
+    if request.user.is_authenticated:
+        user_questions = Question.objects.filter(creator=request.user)
+        return render(request, 'lists/mylists.html', {'user_questions':user_questions})
+    else:
+        return render(request, 'lists/mylists.html')
