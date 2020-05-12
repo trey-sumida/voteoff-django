@@ -10,8 +10,8 @@
         <div class="card mb-3">
             <div class="card-body">
                 <p class="lead">{{ question.question_text }}</p>
-                <a href="{% url 'lists:detail' question.id %}" class="btn-primary btn-sm">Vote Now</a>
-                <a href="{% url 'lists:results' question.id %}" class="btn-primary btn-sm">Results</a>
+                <a type="button" href="{% url 'lists:detail' question.id %}" class="btn-primary btn-sm">Vote Now</a>
+                <a type="button" href="{% url 'lists:results' question.id %}" class="btn-primary btn-sm">Results</a>
             </div>
         </div>
     {% endfor %}

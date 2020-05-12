@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
 <h1 class="text-center mb-3">My Lists</h1>
+{% if user.is_authenticated %}
 {% if questions %}
     {% for question in questions.object_list %}
         <div class="card mb-3">
@@ -35,4 +36,7 @@
     {% endif %}
     </ul>
 </nav>
+{% else %}
+<h1>You must login to view your lists</h1>
+{% endif %}
 {% endblock %}
