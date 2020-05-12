@@ -97,10 +97,12 @@ def createlist(request):
             newlist = question_form.save(commit=False)
             newlist.creator = request.user
             newlist.save()
-            options_form = OptionsForm(request.POST)
-            oplist = options_form.save(commit=False)
-            oplist.question = newlist
-            oplist.save()
+            choices = request.POST.getlist('choice_text')
+            for opt in choices:
+                stripped = opt.strip()
+                if stripped != '':
+                    choice = Choice.objects.create(choice_text=opt, votes=request.POST['votes'], question=newlist)
+                    choice.save()
         except:
-            return render(request, 'lists/createlist.html', {'error':'List failed to create'})
+            return render(request, 'lists/createlist.html', {'error':'List failed to create', 'opt': choices})
         return redirect('lists:mylists')
