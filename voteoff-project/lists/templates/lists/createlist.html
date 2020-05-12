@@ -14,13 +14,22 @@
         <input name="question_text" class="form-control" id="question_text">
     </div>
     <div class="form-group">
-        <label class="form-check-label" for="public">Make Public</label>
-        <input name="public" type="checkbox" class="form-check-input" id="public">
+        <label for="public">Make Public</label>
+        <input name="public" type="checkbox" id="public">
       </div>
+    <ul id='choice-list'>
+        <li>
       <div class="form-group">
         <label for="choice_text">Choice</label>
         <input name="choice_text" class="form-control" id="choice_text">
     </div>
+    </li>
+    <li id="add-choice-li">
+        <input type="button" value="Add Choice" onclick="addchoice();" id="add-choice">
+    </li>
+</ul>
+    
+
     <div class="form-group">
         <label for="votes">Votes</label>
         <input name="votes" class="form-control" id="votes">

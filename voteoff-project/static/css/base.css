@@ -4,6 +4,8 @@
 
 .navbar-content {
     padding-left: 3rem;
+    padding-right: 3rem;
+    background-color: red;
 }
 
 #home-div {
