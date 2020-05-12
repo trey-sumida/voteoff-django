@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'voteOff.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'root',
+        'NAME': 'voteoff-project',
+        'USER': 'postgres',
         'PASSWORD': 'Oreo808.',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
