@@ -5,8 +5,8 @@
 {% endblock %}
 {% block content %}
 <h1 class="text-center mb-3">Public Lists</h1>
-{% if latest_question_list %}
-    {% for question in latest_question_list %}
+{% if questions %}
+    {% for question in questions.object_list %}
         <div class="card mb-3">
             <div class="card-body">
                 <p class="lead">{{ question.question_text }}</p>
@@ -18,4 +18,21 @@
 {% else %}
     <p>No lists available</p>
 {% endif %}
+<div class="pagination">
+    <ul>
+    {% if questions.has_previous %}
+        <li><a href="?page={{ questions.previous_page_number }}">Previous</a></li>
+    {% endif %}
+    {% for pg in questions.paginator.page_range %}
+        {% if questions.number == pg %}
+            <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+        {% else %}
+            <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if questions.has_next %}
+        <li><a href="?page={{ questions.next_page_number }}">Next</a></li>
+    {% endif %}
+    </ul>
+</div>
 {% endblock %}

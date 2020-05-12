@@ -6,13 +6,24 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from .forms import RegisterForm, QuestionForm, OptionsForm
+from django.core.paginator import Paginator
 
 # Get quesitons and display them
 def index(request):
     user_questions = Question.objects.filter(public=True)
-    latest_question_list = user_questions.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'lists/index.html', context)
+    latest_question_list = user_questions.all().order_by('-pub_date')
+    paginator = Paginator(latest_question_list, 5)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+    
+    try:
+        questions = paginator.page(page)
+    except:
+        questions = paginator.page(paginator.num_pages)
+
+    return render(request, 'lists/index.html', {'questions': questions})
 
 # Show specific question and choices
 def detail(request, question_id):
