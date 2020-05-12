@@ -26,3 +26,7 @@ class QuestionForm(ModelForm):
         model = Question
         fields = ["question_text", "public"]
 
+class OptionsForm(ModelForm):
+    class Meta:
+        model = Choice
+        fields = ["choice_text", "votes"]
