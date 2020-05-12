@@ -5,7 +5,7 @@ from .models import Question, Choice
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .forms import RegisterForm
+from .forms import RegisterForm, QuestionForm
 
 # Get quesitons and display them
 def index(request):
@@ -87,3 +87,13 @@ def mylists(request):
         return render(request, 'lists/mylists.html', {'user_questions':user_questions})
     else:
         return render(request, 'lists/mylists.html')
+
+def createlist(request):
+    if request.method == 'GET':
+        return render(request, 'lists/createlist.html', {'form':QuestionForm()})
+    else:
+        form = QuestionForm(request.POST)
+        newlist = form.save(commit=False)
+        newlist.creator = request.user
+        newlist.save()
+        return redirect('lists:mylists')

@@ -1,7 +1,9 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
+from .models import Question, Choice
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -18,3 +20,9 @@ class RegisterForm(UserCreationForm):
         if user_count > 0:
             raise forms.ValidationError("Email has already been registered with another account")
         return email
+
+class QuestionForm(ModelForm):
+    class Meta:
+        model = Question
+        fields = ["question_text", "public"]
+
