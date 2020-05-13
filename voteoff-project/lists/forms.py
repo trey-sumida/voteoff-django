@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
-from .models import Question, Choice
+from .models import Question, Choice, Friend
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -30,3 +30,8 @@ class OptionsForm(ModelForm):
     class Meta:
         model = Choice
         fields = ["choice_text", "votes"]
+
+class FriendForm(ModelForm):
+    class Meta:
+        model = Friend
+        fields = ["username"]

@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
-from .models import Question, Choice
+from .models import Question, Choice, Friend
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .forms import RegisterForm, QuestionForm, OptionsForm
+from .forms import RegisterForm, QuestionForm, OptionsForm, FriendForm
 from django.core.paginator import Paginator
 
 # Get quesitons and display them
@@ -132,3 +132,25 @@ def createlist(request):
         except:
             return render(request, 'lists/createlist.html', {'error':'List failed to create'})
         return redirect('lists:mylists')
+
+def friends(request):
+    my_friends = Friend.objects.filter(friend=request.user)
+    if request.method == "GET":
+        return render(request, 'lists/friends.html', {'my_friends': my_friends})
+    else:
+        try:
+            stripped = request.POST['username'].strip()
+            if stripped != request.user.username:
+                in_database = User.objects.filter(username=stripped)
+                if in_database:
+                    friend_form = FriendForm(request.POST)
+                    newlist = friend_form.save(commit=False)
+                    newlist.friend = request.user
+                    newlist.save()
+                else:
+                    return render(request, 'lists/friends.html', {'error': 'Friend is not in database', 'my_friends': my_friends})
+            else:
+                return render(request, 'lists/friends.html', {'error': 'Silly! You cannot add yourself', 'my_friends': my_friends})
+        except:
+            return render(request, 'lists/friends.html', {'error': 'Failed to add friend', 'my_friends': my_friends})
+        return render(request, 'lists/friends.html', {'my_friends': my_friends})

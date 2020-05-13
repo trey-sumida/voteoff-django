@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+   {{ error }}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="addfriend">Enter Friends Username</label>
+        <input class="form-control" id="addfriend" name="username">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    {% if my_friends %}
+        {% for friend in my_friends %}
+        <ul>
+            <li>{{friend.username}}</li>
+        </ul>
+        {% endfor %}
+    {% else %}
+        <h1>You currently have no friends</h1>
+    {% endif %}
+{% else %}
+<h1>You must log-in to view friends</h1>
+{% endif %}
+{% endblock %}

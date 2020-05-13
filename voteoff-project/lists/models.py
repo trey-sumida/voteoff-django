@@ -17,3 +17,7 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+class Friend(models.Model):
+    friend = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=20)
