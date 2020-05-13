@@ -8,7 +8,6 @@ class Question(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     creator = models.ForeignKey(USER, on_delete=models.CASCADE, related_name='creator')
-    participants = models.ManyToManyField(USER, blank=True, related_name='participants')
 
     def __str__(self):
         return self.question_text
