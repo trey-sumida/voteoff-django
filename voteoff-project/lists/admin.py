@@ -16,7 +16,7 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInLine]
 
 class FriendAdmin(admin.ModelAdmin):
-    fieldsets = [('Add Friend',{'fields': ['from_user', 'to_user', 'accepted']}),]
+    fieldsets = [('Add Friend', {'fields': ['from_user', 'to_user', 'accepted']}),]
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Friend, FriendAdmin)

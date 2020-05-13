@@ -36,6 +36,7 @@ STATICFILES_DIRS = [
 INSTALLED_APPS = [
     'lists.apps.ListsConfig',
     'pages.apps.PagesConfig',
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,6 +72,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'account.Account'
 
 WSGI_APPLICATION = 'voteOff.wsgi.application'
 
