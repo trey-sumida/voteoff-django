@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Choice, Friend
+from .models import Question, Choice, Friend, UserProfile
 
 admin.site.site_header = "VoteOff Admin"
 admin.site.site_title = "VoteOff Admin Area"
@@ -17,3 +17,4 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Friend)
+admin.site.register(UserProfile)

@@ -134,29 +134,22 @@ def createlist(request):
         return redirect('lists:mylists')
 
 def friends(request):
-    if request.user.is_authenticated:
-        my_friends = Friend.objects.filter(friend=request.user)
-        if request.method == "GET":
-            return render(request, 'lists/friends.html', {'my_friends': my_friends})
+    return render(request, 'lists/friends.html')
+
+def add_friend(request):
+    try:
+        username = request.POST['to_user'].strip()
+        in_database = User.objects.filter(username=username)
+        if in_database:
+            if in_database == request.user.username:
+                return render(request, 'lists/friends.html', {'error': 'You cannot add yourself silly!'})
+            else:
+                try:
+                    add, created = Friend.objects.get_or_create(from_user=request.user, to_user=in_database[0], accepted=False)
+                except:
+                    return render(request, 'lists/friends.html', {'error': 'Failed to add user at this time'})
+                return render(request, 'lists/friends.html', {'error': 'Friend request sent'})
         else:
-            try:
-                stripped = request.POST['username'].strip()
-                if stripped != request.user.username:
-                    in_database = User.objects.filter(username=stripped)
-                    in_database2 = Friend.objects.filter(username=stripped, friend=request.user)
-                    if in_database2:
-                        return render(request, 'lists/friends.html', {'error': 'Friend is already on your friends list', 'my_friends': my_friends})
-                    if in_database:
-                        friend_form = FriendForm(request.POST)
-                        newlist = friend_form.save(commit=False)
-                        newlist.friend = request.user
-                        newlist.save()
-                    else:
-                        return render(request, 'lists/friends.html', {'error': 'Friend is not in database', 'my_friends': my_friends})
-                else:
-                    return render(request, 'lists/friends.html', {'error': 'Silly! You cannot add yourself', 'my_friends': my_friends})
-            except:
-                return render(request, 'lists/friends.html', {'error': 'Failed to add friend', 'my_friends': my_friends})
-            return render(request, 'lists/friends.html', {'my_friends': my_friends})
-    else:
-        return render(request, 'lists/friends.html')
+            return render(request, 'lists/friends.html', {'error': 'User not in database'})
+    except:
+        return render(request, 'lists/friends.html', {'error': 'Couldnt add friend'})

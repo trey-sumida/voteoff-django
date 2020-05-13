@@ -1,5 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    friends = models.ManyToManyField("UserProfile", blank=True)
+
+def post_save_user_model_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        try:
+            UserProfile.objects.create(user=instance)
+        except:
+            pass
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -19,6 +31,7 @@ class Choice(models.Model):
         return self.choice_text
 
 class Friend(models.Model):
-    friend = models.ForeignKey(User, on_delete=models.CASCADE)
-    username = models.CharField(max_length=20)
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='from_user', default=None)
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='to_user', default=None)
     accepted = models.BooleanField(default=False)
+

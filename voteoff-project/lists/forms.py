@@ -34,4 +34,4 @@ class OptionsForm(ModelForm):
 class FriendForm(ModelForm):
     class Meta:
         model = Friend
-        fields = ["username"]
+        fields = ["to_user"]
