@@ -80,7 +80,6 @@ def registeracc(request):
             login(request, user)
             return redirect('index')
         else:
-            print(form.errors)
             return render(request, 'lists/register.html', {'form': form, 'error': form.errors})
     else:
         form = RegisterForm()
