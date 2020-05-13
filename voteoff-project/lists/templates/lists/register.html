@@ -24,31 +24,31 @@
 <form class="login-form" method="POST">
     {% csrf_token %}
     <div class="form-row">
-      <div class="col">
+      <div class="col-sm">
         <label for="username">Username</label>
         <input name="username" type="username" class="form-control" id="username" required>
       </div>
-      <div class="col">
+      <div class="col-sm">
         <label for="email">Email</label>
         <input name="email" type="email" class="form-control" id="email" required>
       </div>
     </div>
       <div class="form-row">
-        <div class="col">
+        <div class="col-sm">
           <label for="first_name">First Name</label>
           <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First name">
         </div>
-        <div class="col">
+        <div class="col-sm">
           <label for="last_name">Last Name</label>
           <input type="text" id="last_name" class="form-control" name="last_name" placeholder="Last name">
         </div>
       </div>
       <div class="form-row">
-      <div class="col">
+      <div class="col-sm">
         <label for="password">Password</label>
         <input name="password1" type="password" class="form-control" id="password" required>
       </div>
-      <div class="col">
+      <div class="col-sm">
         <label for="password">Confirm Password</label>
         <input name="password2" type="password" class="form-control" id="password" required>
       </div>

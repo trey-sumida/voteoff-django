@@ -31,7 +31,8 @@
     text-align: center;
     background-color: #343a40;
     color: #ebebeb;
-    height: 30rem;
+    min-height: 30rem;
+    height: auto;
 }
 
 .login-form {
