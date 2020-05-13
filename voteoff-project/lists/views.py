@@ -5,7 +5,7 @@ from .models import Question, Choice, Friend
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .forms import RegisterForm, QuestionForm, OptionsForm, FriendForm
+from .forms import RegisterForm, QuestionForm, FriendForm
 from django.core.paginator import Paginator
 
 # Get quesitons and display them

@@ -24,3 +24,30 @@
     background-color: grey;
     border-radius: 0.5rem;
 }
+
+.login {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    background-color: #343a40;
+    color: #ebebeb;
+    height: 30rem;
+}
+
+.login-form {
+    width: 50%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.loginbutton {
+    text-align: center;
+}
+#loginbutton {
+    background-color: #94ae3f;
+    color: #ebebeb;
+    border-color: #ebebeb;
+    border-radius: 0.5rem;
+    height: 2rem;
+    width: 4rem;
+}
