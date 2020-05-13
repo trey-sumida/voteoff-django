@@ -125,15 +125,17 @@ def createlist(request):
             question_form = QuestionForm(request.POST)
             newlist = question_form.save(commit=False)
             newlist.creator = request.user
-            newlist.save()
-            newlist.participants.add(request.user)
             choices = request.POST.getlist('choice_text')
-            if len(choices) > 1:
-                for opt in choices:
-                    stripped = opt.strip()
-                    if stripped != '':
-                        choice = Choice.objects.create(choice_text=opt, votes=request.POST['votes'], question=newlist)
+            for opt in choices:
+                stripped = opt.strip()
+                print(stripped)
+                if stripped == '':
+                    choice.remove(stripped)
+                if len(choices) > 1:
+                    for opt2 in choices:
+                        choice = Choice.objects.create(choice_text=opt2, votes=request.POST['votes'], question=newlist)
                         choice.save()
+                    newlist.save()
             else:
                 return render(request, 'lists/createlist.html', {'error':'More options needed'})
         except:
