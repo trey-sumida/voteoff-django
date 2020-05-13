@@ -21,3 +21,4 @@ class Choice(models.Model):
 class Friend(models.Model):
     friend = models.ForeignKey(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=20)
+    accepted = models.BooleanField(default=False)
