@@ -23,15 +23,20 @@ def index(request):
     except:
         questions = paginator.page(paginator.num_pages)
 
-    return render(request, 'lists/index.html', {'questions': questions})
+    return render(request, 'lists/index.html', {'questions': questions, 'participants': user_questions})
 
 # Show specific question and choices
 def detail(request, question_id):
     try:
         question = Question.objects.get(pk=question_id)
+        for q in question.participants.all():
+            if request.user == q:
+                allowed = True
+            else:
+                allowed = False
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
-    return render(request, 'lists/detail.html', { 'question': question })
+    return render(request, 'lists/detail.html', { 'question': question, 'allowed': allowed })
 
 # Get question and display results
 def results(request, question_id):

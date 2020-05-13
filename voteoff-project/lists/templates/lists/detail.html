@@ -64,7 +64,11 @@
 <button id="rv" class="btn btn-danger" type="reset" onclick="reset_function('{{ len }}')">Reset</button>
 <br/>
 <br/>
+{% if allowed %}
 <button id="rv" type="submit" class="btn btn-success">Vote</button>
+{% else %}
+<button id="rv" type="submit" class="btn btn-success" disabled>Vote</button>
+{% endif %}
 </div>
 {% endwith %}
 </form>

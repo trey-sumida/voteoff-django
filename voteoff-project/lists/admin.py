@@ -12,9 +12,12 @@ class ChoiceInLine(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [('Add Question', {'fields': ['question_text']}),
-    ('Information', {'fields': ['public', 'creator']}),]
+    ('Information', {'fields': ['public', 'creator', 'participants']}),]
     inlines = [ChoiceInLine]
 
+class FriendAdmin(admin.ModelAdmin):
+    fieldsets = [('Add Friend',{'fields': ['from_user', 'to_user', 'accepted']}),]
+
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Friend)
+admin.site.register(Friend, FriendAdmin)
 admin.site.register(UserProfile)
