@@ -29,15 +29,9 @@ def index(request):
 def detail(request, question_id):
     try:
         question = Question.objects.get(pk=question_id)
-        choices = Choice.objects.filter(question=question)
-        print(choices)
-        if question.public:
-            allowed = True
-        else:
-            allowed = False
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
-    return render(request, 'lists/detail.html', { 'question': question, 'allowed': allowed })
+    return render(request, 'lists/detail.html', { 'question': question })
 
 # Get question and display results
 def results(request, question_id):
@@ -126,18 +120,18 @@ def createlist(request):
             newlist = question_form.save(commit=False)
             newlist.creator = request.user
             choices = request.POST.getlist('choice_text')
+            options = []
             for opt in choices:
                 stripped = opt.strip()
-                print(stripped)
-                if stripped == '':
-                    choice.remove(stripped)
-                if len(choices) > 1:
-                    for opt2 in choices:
-                        choice = Choice.objects.create(choice_text=opt2, votes=request.POST['votes'], question=newlist)
-                        choice.save()
-                    newlist.save()
-            else:
+                if stripped != '':
+                    options.append(stripped)
+            if len(options) < 2:
                 return render(request, 'lists/createlist.html', {'error':'More options needed'})
+            else:
+                newlist.save()
+                for opt in options:
+                    choice = Choice.objects.create(choice_text=opt, votes=request.POST['votes'], question=newlist)
+                    choice.save()
         except:
             return render(request, 'lists/createlist.html', {'error':'List failed to create'})
         return redirect('lists:mylists')
