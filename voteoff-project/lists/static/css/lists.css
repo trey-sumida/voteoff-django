@@ -43,11 +43,3 @@
 .loginbutton {
     text-align: center;
 }
-#loginbutton {
-    background-color: #94ae3f;
-    color: #ebebeb;
-    border-color: #ebebeb;
-    border-radius: 0.5rem;
-    height: 2rem;
-    width: 4rem;
-}
