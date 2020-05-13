@@ -6,9 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .forms import RegisterForm, QuestionForm, FriendForm
 from django.core.paginator import Paginator
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from account.models import Account as User
 
 # Get quesitons and display them
 def index(request):

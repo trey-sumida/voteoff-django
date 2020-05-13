@@ -2,11 +2,8 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import User
 from .models import Question, Choice, Friend
-from django.apps import apps
-
-User = apps.get_model('account', 'Account')
+from account.models import Account as User
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
