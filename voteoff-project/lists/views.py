@@ -29,8 +29,12 @@ def index(request):
 def detail(request, question_id):
     try:
         question = Question.objects.get(pk=question_id)
-        for q in question.participants.all():
-            if request.user == q:
+        if question.public:
+            allowed = True
+        else:
+            allowed = False
+        for user in question.participants.all():
+            if request.user == user:
                 allowed = True
             else:
                 allowed = False
@@ -125,6 +129,7 @@ def createlist(request):
             newlist = question_form.save(commit=False)
             newlist.creator = request.user
             newlist.save()
+            newlist.participants.add(request.user)
             choices = request.POST.getlist('choice_text')
             if len(choices) > 1:
                 for opt in choices:
