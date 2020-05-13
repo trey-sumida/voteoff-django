@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
-from .models import Question, Choice, Friend
+from .models import Question, Choice
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
-from .forms import RegisterForm, QuestionForm, FriendForm
+from .forms import RegisterForm, QuestionForm
 from django.core.paginator import Paginator
 from account.models import Account as User
 
@@ -29,15 +29,12 @@ def index(request):
 def detail(request, question_id):
     try:
         question = Question.objects.get(pk=question_id)
+        choices = Choice.objects.filter(question=question)
+        print(choices)
         if question.public:
             allowed = True
         else:
             allowed = False
-        for user in question.participants.all():
-            if request.user == user:
-                allowed = True
-            else:
-                allowed = False
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
     return render(request, 'lists/detail.html', { 'question': question, 'allowed': allowed })
@@ -142,24 +139,3 @@ def createlist(request):
         except:
             return render(request, 'lists/createlist.html', {'error':'List failed to create'})
         return redirect('lists:mylists')
-
-def friends(request):
-    return render(request, 'lists/friends.html')
-
-def add_friend(request):
-    try:
-        username = request.POST['to_user'].strip()
-        in_database = User.objects.filter(username=username)
-        if in_database:
-            if in_database == request.user.username:
-                return render(request, 'lists/friends.html', {'error': 'You cannot add yourself silly!'})
-            else:
-                try:
-                    add, created = Friend.objects.get_or_create(from_user=request.user, to_user=in_database[0], accepted=False)
-                except:
-                    return render(request, 'lists/friends.html', {'error': 'Failed to add user at this time'})
-                return render(request, 'lists/friends.html', {'error': 'Friend request sent'})
-        else:
-            return render(request, 'lists/friends.html', {'error': 'User not in database'})
-    except:
-        return render(request, 'lists/friends.html', {'error': 'Couldnt add friend'})

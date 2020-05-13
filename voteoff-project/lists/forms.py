@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from .models import Question, Choice, Friend
+from .models import Question, Choice
 from account.models import Account as User
 
 class RegisterForm(UserCreationForm):
@@ -26,7 +26,3 @@ class QuestionForm(ModelForm):
         model = Question
         fields = ["question_text", "public"]
 
-class FriendForm(ModelForm):
-    class Meta:
-        model = Friend
-        fields = ["to_user"]
