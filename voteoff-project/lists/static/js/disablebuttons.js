@@ -56,3 +56,33 @@ function reset_function(len) {
         }
     }
 }
+
+// Work in progess
+function disableButton(id, len, type) {
+    len++;
+    if (type === "inc") {
+        for(i=1; i<len; i++){
+            if (id == "inc"+i) {
+                var f = document.getElementById("dec"+i);
+                f.setAttribute('disabled','disabled');
+            } else {
+                var rem = document.getElementById("inc"+i)
+                var rem2 = document.getElementById("dec"+i)
+                rem.removeAttribute("disabled")
+                rem2.removeAttribute("disabled")
+            }
+        }
+    } else {
+        for(i=1; i<len; i++){
+            if (id == "dec"+i) {
+                var f = document.getElementById("inc"+i);
+                f.setAttribute('disabled','disabled');
+            } else {
+                var rem = document.getElementById("inc"+i)
+                var rem2 = document.getElementById("dec"+i)
+                rem.removeAttribute("disabled")
+                rem2.removeAttribute("disabled")
+            }
+        }
+    }
+}

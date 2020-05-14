@@ -44,7 +44,12 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
         increment_choice = question.choice_set.get(pk=request.POST['inc_choice'])
-        decrement_choice = question.choice_set.get(pk=request.POST['dec_choice'])      
+        decrement_choice = question.choice_set.get(pk=request.POST['dec_choice'])
+        if increment_choice == decrement_choice:
+             return render(request, 'lists/detail.html', {
+                'question': question,
+                'error_message': "Choices cannot be the same.",
+        })
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'lists/detail.html', {

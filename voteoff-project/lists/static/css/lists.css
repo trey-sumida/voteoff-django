@@ -21,8 +21,9 @@
 
 #list {
     padding: 1rem;
-    background-color: grey;
+    background-color: #343a40;
     border-radius: 0.5rem;
+    padding: 2rem;
 }
 
 .login {
