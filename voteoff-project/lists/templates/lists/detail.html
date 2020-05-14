@@ -23,13 +23,13 @@
 				{% for choice in question.choice_set.all %}
 				{% if choice.votes == 0 %}
 				<div class="form-group">
-					<input type="radio" name="inc_choice" class="form-check-input" id="0" value="{{ choice.id }}"
+					<input type="radio"  name="inc_choice" class="form-check-input" id="0" value="{{ choice.id }}"
 						disabled />
 					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
 				</div>
 				{% else %}
 				<div class="form-group">
-					<input type="radio" name="inc_choice"
+					<input type="radio" name="inc_choice" onclick="disableButton(id, '{{ len }}', 'inc')"
 						class="form-check-input" id="inc{{ forloop.counter }}" value="{{ choice.id }}" />
 					<label for="{{ forloop.counter }}">{{ choice.choice_text }}</label>
 				</div>
@@ -51,7 +51,7 @@
 				</div>
 				{% else %}
 				<div class="form-group">
-					<input type="radio" name="dec_choice"
+					<input onclick="disableButton(id, '{{ len }}', 'dec')" type="radio" name="dec_choice"
 						class="form-check-input" id="dec{{ forloop.counter }}" value="{{ choice.id }}" />
 					<label for="{{ forloop.counter }}">{{ choice.choice_text }}</label>
 				</div>
@@ -61,8 +61,6 @@
 		</div>
 		</div>
 <div class="button-div">
-<button id="rv" class="btn btn-danger" type="reset" onclick="reset_function('{{ len }}')">Reset</button>
-<br/>
 <br/>
 <button id="rv" type="submit" class="btn btn-success">Vote</button>
 </div>

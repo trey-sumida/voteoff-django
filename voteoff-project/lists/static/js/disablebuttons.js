@@ -66,10 +66,16 @@ function disableButton(id, len, type) {
                 var f = document.getElementById("dec"+i);
                 f.setAttribute('disabled','disabled');
             } else {
-                var rem = document.getElementById("inc"+i)
-                var rem2 = document.getElementById("dec"+i)
-                rem.removeAttribute("disabled")
-                rem2.removeAttribute("disabled")
+                try {
+                    var rem = document.getElementById("inc"+i)
+                    var rem2 = document.getElementById("dec"+i);
+                    if (!rem2.checked) {
+                        rem.removeAttribute("disabled");
+                        rem2.removeAttribute("disabled");
+                    }
+                } catch(err) {
+                    console.log(err)
+                }   
             }
         }
     } else {
@@ -78,10 +84,16 @@ function disableButton(id, len, type) {
                 var f = document.getElementById("inc"+i);
                 f.setAttribute('disabled','disabled');
             } else {
-                var rem = document.getElementById("inc"+i)
-                var rem2 = document.getElementById("dec"+i)
-                rem.removeAttribute("disabled")
-                rem2.removeAttribute("disabled")
+                try {
+                    var rem = document.getElementById("inc"+i)
+                    var rem2 = document.getElementById("dec"+i);
+                    if (!rem.checked) {
+                        rem.removeAttribute("disabled");
+                        rem2.removeAttribute("disabled");
+                    }
+                } catch(err) {
+                    console.log(err)
+                }          
             }
         }
     }
