@@ -11,6 +11,11 @@ class ChoiceInLine(admin.TabularInline):
     extra = 3
 
 class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'creator', 'pub_date')
+    readonly_fields = ('pub_date',)
+
+    filter_horizontal = ()
+    list_filter = ()
     fieldsets = [('Add Question', {'fields': ['question_text']}),
     ('Information', {'fields': ['public', 'creator',]}),]
     inlines = [ChoiceInLine]
