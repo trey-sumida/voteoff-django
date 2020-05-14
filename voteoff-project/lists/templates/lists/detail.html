@@ -25,13 +25,16 @@
 				<div class="form-group">
 					<input type="radio"  name="inc_choice" class="form-check-input" id="0" value="{{ choice.id }}"
 						disabled />
-					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }} has already been voted off</label>
 				</div>
 				{% else %}
 				<div class="form-group">
 					<input type="radio" name="inc_choice" onclick="disableButton(id, '{{ len }}', 'inc')"
 						class="form-check-input" id="inc{{ forloop.counter }}" value="{{ choice.id }}" />
-					<label for="{{ forloop.counter }}">{{ choice.choice_text }}</label>
+					<label for="{{ forloop.counter }}">{{ choice.choice_text }}
+						{% if choice.choice_picture %}
+						<img class="choice-pic" src="{{choice.choice_picture.url}}"/></label>
+						{% endif %}
 				</div>
 				{% endif %}
 				{% endfor %}
@@ -47,7 +50,7 @@
 				<div class="form-group">
 					<input type="radio" name="dec_choice" class="form-check-input" id="0" value="{{ choice.id }}"
 						disabled />
-					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }} has already been voted off</label>
 				</div>
 				{% else %}
 				<div class="form-group">
