@@ -105,9 +105,16 @@ def createlist(request):
                 return render(request, 'lists/createlist.html', {'error':'More options needed'})
             else:
                 newlist.save()
+                count = 1
                 for opt in options:
                     choice = Choice.objects.create(choice_text=opt, votes=request.POST['votes'], question=newlist)
                     choice.save()
+                    try:
+                        choice.choice_picture = request.FILES.get('choice_picture'+str(count))
+                        choice.save()
+                    except:
+                        pass
+                    count += 1
         except:
             return render(request, 'lists/createlist.html', {'error':'List failed to create'})
         return redirect('lists:mylists')
