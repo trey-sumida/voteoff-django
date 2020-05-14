@@ -90,18 +90,31 @@ def createlist(request):
             newlist = question_form.save(commit=False)
             newlist.creator = request.user
             choices = request.POST.getlist('choice_text')
+            images = request.POST.getlist('choice_picture')
+            images2 = request.FILES.getlist('choice_picture')
+            print(images2)
+            counter = 0
             options = []
+            picture_options = []
             for opt in choices:
                 stripped = opt.strip()
                 if stripped != '':
                     options.append(stripped)
+                    picture_options.append(images[counter])
+                counter += 1
             if len(options) < 2:
                 return render(request, 'lists/createlist.html', {'error':'More options needed'})
             else:
                 newlist.save()
+                counter = 0
                 for opt in options:
                     choice = Choice.objects.create(choice_text=opt, votes=request.POST['votes'], question=newlist)
                     choice.save()
+                    for img in images2:
+                        if img == picture_options[counter]:
+                            choice.choice_picture = img
+                    choice.save()
+                    counter += 1
         except:
             return render(request, 'lists/createlist.html', {'error':'List failed to create'})
         return redirect('lists:mylists')

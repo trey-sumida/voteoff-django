@@ -7,7 +7,7 @@
 {% block content %}
 <h1 class="text-center mb-3">Create List</h1>
 {{ error }}
-<form method='POST'>
+<form enctype="multipart/form-data" method='POST'>
     {% csrf_token %}
     <div class="form-group">
         <label for="question_text">Question</label>
@@ -17,40 +17,35 @@
         <label for="public">Make Public</label>
         <input name="public" type="checkbox" id="public">
       </div>
-    <ul id='choice-list'>
-        <li>
+    <div id='choice-list'>
+
       <div class="form-group">
           <div class="row">
               <div class="col">
-                <label for="choice_text">Choice</label>
-                <input name="choice_text" class="form-control" id="choice_text">
+                <label for="choice_text1">Choice</label>
+                <input name="choice_text1" class="form-control" id="choice_text1">
               </div>
               <div class="col">
-                <label for="choice_picture">Upload image</label>
-                <input type="file" class="form-control-file" id="choice_picture" name="choice_picture">
+                <label for="choice_picture1">Upload image</label>
+                <input type="file" class="form-control-file" id="choice_picture1" name="choice_picture1">
               </div>
           </div>
     </div>
-    </li>
-        <li>
     <div class="form-group">
         <div class="row">
             <div class="col">
-              <label for="choice_text">Choice</label>
-              <input name="choice_text" class="form-control" id="choice_text">
+              <label for="choice_text2">Choice</label>
+              <input name="choice_text2" class="form-control" id="choice_text2">
             </div>
             <div class="col">
-              <label for="choice_picture">Upload image</label>
-              <input type="file" class="form-control-file" id="choice_picture" name="choice_picture">
+              <label for="choice_picture2">Upload image</label>
+              <input type="file" class="form-control-file" id="choice_picture2" name="choice_picture2">
             </div>
         </div>
     </div>
-    </li>
-    <li id="add-choice-li">
-        <input type="button" value="Add Choice" onclick="addchoice();" id="add-choice">
-    </li>
-</ul>
-    
+</div>
+
+<input type="button" value="Add Choice" onclick="addchoice();" id="add-choice">
 
     <div class="form-group">
         <label for="votes">Votes</label>
