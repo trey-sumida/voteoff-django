@@ -1,10 +1,8 @@
 .general-background {
-    padding-top: 5rem;
     background-color: #94ae3f;    
-    width: 100%;
+    width: 100vw;
     min-height: 100vh;
     height: auto;
-    padding-bottom: 5rem;
 }
 
 .navbar-content {
@@ -40,4 +38,11 @@
     padding-right: 2rem;
     padding-left: 2em;
     color: #ebebeb;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }

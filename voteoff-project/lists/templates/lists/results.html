@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
 {% endblock %}
 {% block content %}
+<div class="details-div">
 <h1 class="mb-5 text-center">{{ question.question_text }}</h1>
 
 <ul class="list-group mb-5">
@@ -14,7 +15,7 @@
 	</li>
 	{% endfor %}
 </ul>
-
 <a class="btn btn-secondary" href="{% url 'lists:index' %}">Back To Lists</a>
 <a class="btn btn-dark" href="{% url 'lists:detail' question.id %}">Vote again?</a>
+</div>
 {% endblock %}

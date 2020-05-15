@@ -19,11 +19,9 @@
     width: 25vw;
 }
 
-#list {
-    padding: 1rem;
-    background-color: #343a40;
-    border-radius: 0.5rem;
-    padding: 2rem;
+.padding {
+    padding-top: 10vh;
+    min-height: 100vh;
 }
 
 .login {
@@ -32,12 +30,24 @@
     text-align: center;
     background-color: #343a40;
     color: #ebebeb;
-    min-height: 30rem;
+    min-height: 50vh;
+    min-width: 60vw;
     height: auto;
 }
 
+#list {
+    padding: 1rem;
+    background-color: #343a40;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.details-div {
+    padding-top: 10vh;
+}
+
 .login-form {
-    width: 50%;
+    width: 70%;
     margin: 0 auto;
     text-align: left;
 }

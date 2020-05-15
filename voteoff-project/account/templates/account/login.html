@@ -6,10 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<br />
-<br />
-<br />
-<br />
+<div class="wrapper">
 {% if error %}
 <div class="alert alert-danger" role="alert">
     {{ error }}
@@ -39,5 +36,6 @@
 <br/>
 <h4>Don't have an account? Click <a href="{% url 'account:registeracc' %}">Here</a> to register.</h4>
 {% endif %}
+</div>
 </div>
 {% endblock %}
