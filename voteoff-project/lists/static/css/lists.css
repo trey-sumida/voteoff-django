@@ -55,3 +55,8 @@
 .loginbutton {
     text-align: center;
 }
+
+.choice-pic {
+    max-height: 10rem;
+    max-width: 15rem;
+}

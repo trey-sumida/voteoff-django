@@ -56,7 +56,11 @@
 				<div class="form-group">
 					<input onclick="disableButton(id, '{{ len }}', 'dec')" type="radio" name="dec_choice"
 						class="form-check-input" id="dec{{ forloop.counter }}" value="{{ choice.id }}" />
-					<label for="{{ forloop.counter }}">{{ choice.choice_text }}</label>
+					<label for="{{ forloop.counter }}">
+						{{ choice.choice_text }}
+						{% if choice.choice_picture %}
+						<img class="choice-pic" src="{{choice.choice_picture.url}}"/></label>
+						{% endif %}</label>
 				</div>
 				{% endif %}
 				{% endfor %}
