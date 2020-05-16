@@ -5,5 +5,5 @@ from .models import Contest, Choice
 class ContestForm(ModelForm):
     class Meta:
         model = Contest
-        fields = ["contest_title", "public"]
+        fields = ["contest_title", "contest_description", "public"]
 

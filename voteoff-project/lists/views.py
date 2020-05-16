@@ -88,14 +88,17 @@ def createlist(request):
         try:
             contest_form = ContestForm(request.POST)
             newlist = contest_form.save(commit=False)
-            newlist.creator = request.user
+            try:
+                newlist.contest_image = request.FILES.get('contest_image')
+                newlist.creator = request.user
+                newlist.save(commit=False)
+            except:
+                newlist.creator = request.user
             i = 1
             choices = []
-            print(request.POST.get('choice_text'+str(i)))
             while request.POST.get('choice_text'+str(i)):
                 choices.append(request.POST.get('choice_text'+str(i)))
                 i += 1
-            print(choices)
             options = []
             for opt in choices:
                 stripped = opt.strip()
