@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load l10n %}
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
 {% endblock %}
@@ -71,11 +72,13 @@
 {% if has_started %}
 {% if not has_ended %}
 <button id="rv" type="submit" class="btn btn-success">Vote</button>
+<h1>Contest ends on {{contest.end_date | localize}}</h1>
+
 {% else %}
-<h1>Contest ended on {{contest.end_date}}</h1>
+<h1>Contest ended on {{contest.end_date | localize}}</h1>
 {% endif %}
 {% else %}
-<h1>Contest will start at {{contest.start_date}}</h1>
+<h1>Contest will start at {{contest.start_date | localize}}</h1>
 {% endif %}
 </div>
 {% endwith %}
