@@ -105,7 +105,8 @@ def createlist(request):
                 if stripped != '':
                     options.append(stripped)
             if len(options) < 2:
-                return render(request, 'lists/createlist.html', {'error':'More options needed'})
+                form = {'contest_title': newlist.contest_title, 'contest_description': newlist.contest_description, 'public': newlist.public}
+                return render(request, 'lists/createlist.html', {'error':'More options needed', 'form': form})
             else:
                 newlist.save()
                 count = 1

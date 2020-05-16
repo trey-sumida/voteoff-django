@@ -10,10 +10,14 @@
 {% if contests %}
     {% for contest in contests.object_list %}
         <div class="card mb-3">
+            {% if contest.contest_image %}
+            <img src='{{contest.contest_image.url}}'/>
+            {% endif %}
             <div class="card-body">
                 <p class="lead">{{ contest.contest_title }}</p>
-                <a href="{% url 'lists:detail' contest.id %}" class="btn-primary btn-sm">Vote Now</a>
-                <a href="{% url 'lists:results' contest.id %}" class="btn-primary btn-sm">Results</a>
+                <p class="card-body">{{ contest.contest_description }}</p>
+                <a type="button" href="{% url 'lists:detail' contest.id %}" class="btn-primary btn-sm">Vote Now</a>
+                <a type="button" href="{% url 'lists:results' contest.id %}" class="btn-primary btn-sm">Results</a>
             </div>
         </div>
     {% endfor %}
