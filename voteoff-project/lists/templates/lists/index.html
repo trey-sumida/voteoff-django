@@ -9,6 +9,7 @@
 {% if contests %}
     {% for contest in contests.object_list %}
         <div class="card mb-3">
+            <img src='{{contest.contest_image.url}}'/>
             <div class="card-body">
                 <p class="lead">{{ contest.contest_title }}</p>
                 <a type="button" href="{% url 'lists:detail' contest.id %}" class="btn-primary btn-sm">Vote Now</a>
