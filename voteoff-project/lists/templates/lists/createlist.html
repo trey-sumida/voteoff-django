@@ -1,70 +1,97 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
-{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}" />
+{% endblock %} {% block content %}
 <div class="padding">
-<h1 class="text-center mb-3">Create List</h1>
-{{ error }}
-<form enctype="multipart/form-data" method='POST'>
+  <h1 class="text-center mb-3">Create List</h1>
+  {{ error }}
+  <form enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <div class="form-group">
-        <label for="contest_title">Contest</label>
-        <input name="contest_title" class="form-control" id="contest_title" value="{{form.contest_title}}">
+      <label for="contest_title">Contest</label>
+      <input
+        name="contest_title"
+        class="form-control"
+        id="contest_title"
+        value="{{form.contest_title}}"
+      />
     </div>
     <div class="form-group">
       <label for="contest_description">Description for contest</label>
-      <textarea id="contest_description" class="form-control" name="contest_description" rows="3">{{form.contest_description}}</textarea>
+      <textarea
+        id="contest_description"
+        class="form-control"
+        name="contest_description"
+        rows="3"
+      >
+{{form.contest_description}}</textarea
+      >
     </div>
     <div class="form-group">
       <label for="contest_image">Image for contest</label>
-      <input type="file" class="form-control-file" id="contest_image" name="contest_image">
+      <input
+        type="file"
+        class="form-control-file"
+        id="contest_image"
+        name="contest_image"
+      />
     </div>
     <div class="form-group">
-        <label for="public">Make Public</label>
-        {% if form.public %}
-        <input name="public" type="checkbox" id="public" checked>
-        {% else %}
-        <input name="public" type="checkbox" id="public">
-        {% endif %}
-      </div>
-    <div id='choice-list'>
-
+      <label for="public">Make Public</label>
+      {% if form.public %}
+      <input name="public" type="checkbox" id="public" checked />
+      {% else %}
+      <input name="public" type="checkbox" id="public" />
+      {% endif %}
+    </div>
+    <div id="choice-list">
       <div class="form-group">
-          <div class="row">
-              <div class="col">
-                <label for="choice_text1">Choice</label>
-                <input name="choice_text1" class="form-control" id="choice_text1">
-              </div>
-              <div class="col">
-                <label for="choice_picture1">Upload image</label>
-                <input type="file" class="form-control-file" id="choice_picture1" name="choice_picture1">
-              </div>
-          </div>
-    </div>
-    <div class="form-group">
         <div class="row">
-            <div class="col">
-              <label for="choice_text2">Choice</label>
-              <input name="choice_text2" class="form-control" id="choice_text2">
-            </div>
-            <div class="col">
-              <label for="choice_picture2">Upload image</label>
-              <input type="file" class="form-control-file" id="choice_picture2" name="choice_picture2">
-            </div>
+          <div class="col">
+            <label for="choice_text1">Choice</label>
+            <input name="choice_text1" class="form-control" id="choice_text1" />
+          </div>
+          <div class="col">
+            <label for="choice_picture1">Upload image</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="choice_picture1"
+              name="choice_picture1"
+            />
+          </div>
         </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <label for="choice_text2">Choice</label>
+            <input name="choice_text2" class="form-control" id="choice_text2" />
+          </div>
+          <div class="col">
+            <label for="choice_picture2">Upload image</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="choice_picture2"
+              name="choice_picture2"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-</div>
 
-<input type="button" value="Add Choice" onclick="addchoice();" id="add-choice">
+    <input
+      type="button"
+      value="Add Choice"
+      onclick="addchoice();"
+      id="add-choice"
+    />
 
     <div class="form-group">
-        <label for="votes">Votes</label>
-        <input name="votes" class="form-control" id="votes">
+      <label for="votes">Votes</label>
+      <input name="votes" class="form-control" id="votes" />
     </div>
     <button type="submit">Create</button>
-</form>
+  </form>
 </div>
 {% endblock %}
