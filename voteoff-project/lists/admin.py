@@ -11,13 +11,13 @@ class ChoiceInLine(admin.TabularInline):
     extra = 3
 
 class ContestAdmin(admin.ModelAdmin):
-    list_display = ('contest_title', 'creator', 'pub_date')
+    list_display = ('contest_title', 'creator', 'pub_date', 'start_date', 'end_date')
     readonly_fields = ('pub_date',)
 
     filter_horizontal = ()
     list_filter = ()
     fieldsets = [('Add Contest', {'fields': ['contest_title']}),
-    ('Information', {'fields': ['public', 'creator', 'contest_description', 'contest_image']}),]
+    ('Information', {'fields': ['public', 'creator', 'contest_description', 'contest_image', 'start_date', 'end_date']}),]
     inlines = [ChoiceInLine]
 
 

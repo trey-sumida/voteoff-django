@@ -8,14 +8,14 @@
     {% for choice in contest.choice_set.all %}
     <li class="list-group-item">
       {{ choice.choice_text }}
-	  <span class="badge badge-success float-right"
-	  >{{ choice.votes }} vote{{ choice.votes | pluralize }}</span>
+	  <span class="badge badge-success float-right">
+      {{ choice.votes }} 
+      vote{{ choice.votes | pluralize }}
+    </span>
     </li>
     {% endfor %}
   </ul>
   <a class="btn btn-secondary" href="{% url 'lists:index' %}">Back To Lists</a>
-  <a class="btn btn-dark" href="{% url 'lists:detail' contest.id %}"
-    >Vote again?</a
-  >
+  <a class="btn btn-dark" href="{% url 'lists:detail' contest.id %}">Vote again?</a>
 </div>
 {% endblock %}

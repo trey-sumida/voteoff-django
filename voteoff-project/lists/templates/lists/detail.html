@@ -6,7 +6,6 @@
 {% block content %}
 <div class="details-div">
 <h1 class="text-center mb-3">{{ contest.contest_title }}</h1>
-
 {% if error_message %}
 <p class="alert alert-danger">
 	<strong>{{ error_message }}</strong>
@@ -69,7 +68,15 @@
 		</div>
 <div class="button-div">
 <br/>
+{% if has_started %}
+{% if not has_ended %}
 <button id="rv" type="submit" class="btn btn-success">Vote</button>
+{% else %}
+<h1>Contest ended on {{contest.end_date}}</h1>
+{% endif %}
+{% else %}
+<h1>Contest will start at {{contest.start_date}}</h1>
+{% endif %}
 </div>
 {% endwith %}
 </form>

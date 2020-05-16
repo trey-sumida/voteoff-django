@@ -11,6 +11,8 @@ class Contest(models.Model):
     creator = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="creator")
     contest_description = models.TextField(max_length=300, default="")
     contest_image = models.ImageField(null=True, blank=True)
+    start_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.contest_title

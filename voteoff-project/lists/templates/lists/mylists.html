@@ -3,8 +3,9 @@
 {% endblock %} {% block content %}
 <div class="padding">
   <h1 class="text-center mb-3">My Lists</h1>
-  {% if user.is_authenticated %} {% if contests %} {% for contest in
-  contests.object_list %}
+  {% if user.is_authenticated %} 
+  {% if contests %} 
+  {% for contest in contests.object_list %}
   <div class="card mb-3">
     {% if contest.contest_image %}
     <img src="{{contest.contest_image.url}}" />
@@ -26,7 +27,8 @@
       >
     </div>
   </div>
-  {% endfor %} {% else %}
+  {% endfor %}
+  {% else %}
   <p>No lists available</p>
   {% endif %}
   <nav>
@@ -37,8 +39,9 @@
           >Previous</a
         >
       </li>
-      {% endif %} {% for pg in contests.paginator.page_range %} {% if
-      contests.number == pg %}
+      {% endif %}
+      {% for pg in contests.paginator.page_range %} 
+      {% if contests.number == pg %}
       <li class="page-item active">
         <a class="page-link" href="?page={{ pg }}">{{ pg }}</a>
       </li>
@@ -46,7 +49,9 @@
       <li class="page-item">
         <a class="page-link" href="?page={{ pg }}">{{ pg }}</a>
       </li>
-      {% endif %} {% endfor %} {% if contests.has_next %}
+      {% endif %}
+      {% endfor %}
+      {% if contests.has_next %}
       <li class="page-item">
         <a class="page-link" href="?page={{ contests.next_page_number }}"
           >Next</a

@@ -7,6 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import ContestForm
 from django.core.paginator import Paginator
 from account.models import Account as User
+from django.utils import timezone
 
 # Get quesitons and display them
 def index(request):
@@ -34,9 +35,18 @@ def index(request):
 def detail(request, contest_id):
     try:
         contest = Contest.objects.get(pk=contest_id)
+        now = timezone.now()
+        if now > contest.start_date:
+            started = True
+        else:
+            started = False
+        if now > contest.end_date:
+            ended = True
+        else:
+            ended = False
     except Contest.DoesNotExist:
         raise Http404("Contest does not exist")
-    return render(request, "lists/detail.html", {"contest": contest})
+    return render(request, "lists/detail.html", {"contest": contest, "has_started": started, "has_ended": ended})
 
 
 # Get contest and display results
