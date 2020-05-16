@@ -5,22 +5,22 @@
 {% endblock %}
 {% block content %}
 <div class="details-div">
-<h1 class="text-center mb-3">{{ question.question_text }}</h1>
+<h1 class="text-center mb-3">{{ contest.contest_title }}</h1>
 
 {% if error_message %}
 <p class="alert alert-danger">
 	<strong>{{ error_message }}</strong>
 </p>
 {% endif %}
-	<form id="list" action="{% url 'lists:vote' question.id %}" method="POST">
+	<form id="list" action="{% url 'lists:vote' contest.id %}" method="POST">
 		{% csrf_token %}
-		{% with len=question.choice_set.all.count %}
+		{% with len=contest.choice_set.all.count %}
 		<div class="row">
 			<div class="col-md-6">
 			<div class="col-sm options">
 				<h2>choose one of the following to add a point to:</h2>
 				<hr/>
-				{% for choice in question.choice_set.all %}
+				{% for choice in contest.choice_set.all %}
 				{% if choice.votes == 0 %}
 				<div class="form-group">
 					<input type="radio"  name="inc_choice" class="form-check-input" id="0" value="{{ choice.id }}"
@@ -45,7 +45,7 @@
 			<div class="col-sm options">
 				<h2>choose one of the following to remove a point from:</h2>
 				<hr/>
-				{% for choice in question.choice_set.all %}
+				{% for choice in contest.choice_set.all %}
 				{% if choice.votes == 0 %}
 				<div class="form-group">
 					<input type="radio" name="dec_choice" class="form-check-input" id="0" value="{{ choice.id }}"

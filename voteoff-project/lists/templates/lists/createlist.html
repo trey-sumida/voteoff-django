@@ -11,8 +11,16 @@
 <form enctype="multipart/form-data" method='POST'>
     {% csrf_token %}
     <div class="form-group">
-        <label for="question_text">Question</label>
-        <input name="question_text" class="form-control" id="question_text">
+        <label for="contest_title">Contest</label>
+        <input name="contest_title" class="form-control" id="contest_title">
+    </div>
+    <div class="form-group">
+      <label for="contest_description">Description for contest</label>
+      <textarea id="contest_description" class="form-control" id="contest_description" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="contest_image">Image for contest</label>
+      <input type="file" class="form-control-file" id="contest_image" name="contest_image">
     </div>
     <div class="form-group">
         <label for="public">Make Public</label>

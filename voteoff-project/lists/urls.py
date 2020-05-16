@@ -6,7 +6,7 @@ urlpatterns = [
     path('lists/', views.index, name='index'),
     path('lists/create', views.createlist, name='createlist'),
     path('lists/mylists', views.mylists, name='mylists'),
-    path('lists/details/<int:question_id>/', views.detail, name='detail'),
-    path('lists/results/<int:question_id>/', views.results, name='results'),
-    path('lists/<int:question_id>/vote/', views.vote, name='vote')
+    path('lists/details/<int:contest_id>/', views.detail, name='detail'),
+    path('lists/results/<int:contest_id>/', views.results, name='results'),
+    path('lists/<int:contest_id>/vote/', views.vote, name='vote')
 ]

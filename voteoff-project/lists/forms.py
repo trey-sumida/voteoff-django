@@ -1,9 +1,9 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Question, Choice
+from .models import Contest, Choice
 
-class QuestionForm(ModelForm):
+class ContestForm(ModelForm):
     class Meta:
-        model = Question
-        fields = ["question_text", "public"]
+        model = Contest
+        fields = ["contest_title", "public"]
 

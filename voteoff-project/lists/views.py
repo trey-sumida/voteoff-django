@@ -1,54 +1,54 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
-from .models import Question, Choice
+from .models import Contest, Choice
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
-from .forms import QuestionForm
+from .forms import ContestForm
 from django.core.paginator import Paginator
 from account.models import Account as User
 
 # Get quesitons and display them
 def index(request):
-    user_questions = Question.objects.filter(public=True)
-    latest_question_list = user_questions.all().order_by('-pub_date')
-    paginator = Paginator(latest_question_list, 5)
+    user_contests = Contest.objects.filter(public=True)
+    latest_contest_list = user_contests.all().order_by('-pub_date')
+    paginator = Paginator(latest_contest_list, 5)
     try:
         page = int(request.GET.get('page', '1'))
     except:
         page = 1
     
     try:
-        questions = paginator.page(page)
+        contests = paginator.page(page)
     except:
-        questions = paginator.page(paginator.num_pages)
+        contests = paginator.page(paginator.num_pages)
 
-    return render(request, 'lists/index.html', {'questions': questions, 'participants': user_questions})
+    return render(request, 'lists/index.html', {'contests': contests, 'participants': user_contests})
 
-# Show specific question and choices
-def detail(request, question_id):
+# Show specific contest and choices
+def detail(request, contest_id):
     try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, 'lists/detail.html', { 'question': question })
+        contest = Contest.objects.get(pk=contest_id)
+    except Contest.DoesNotExist:
+        raise Http404("Contest does not exist")
+    return render(request, 'lists/detail.html', { 'contest': contest })
 
-# Get question and display results
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'lists/results.html', { 'question': question })
+# Get contest and display results
+def results(request, contest_id):
+    contest = get_object_or_404(Contest, pk=contest_id)
+    return render(request, 'lists/results.html', { 'contest': contest })
 
-# Vote for a question choice
-def vote(request, question_id):
+# Vote for a contest choice
+def vote(request, contest_id):
     # print(request.POST['choice'])
-    question = get_object_or_404(Question, pk=question_id)
+    contest = get_object_or_404(Contest, pk=contest_id)
     try:
-        increment_choice = question.choice_set.get(pk=request.POST['inc_choice'])
-        decrement_choice = question.choice_set.get(pk=request.POST['dec_choice'])
+        increment_choice = contest.choice_set.get(pk=request.POST['inc_choice'])
+        decrement_choice = contest.choice_set.get(pk=request.POST['dec_choice'])
     except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
+        # Redisplay the contest voting form.
         return render(request, 'lists/detail.html', {
-            'question': question,
+            'contest': contest,
             'error_message': "You didn't select a choice.",
         })
     else:
@@ -59,25 +59,25 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('lists:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('lists:results', args=(contest.id,)))
 
 
 def mylists(request):
     if request.user.is_authenticated:
-        my_questions = Question.objects.filter(creator=request.user)
-        latest_question_list = my_questions.all().order_by('-pub_date')
-        paginator = Paginator(latest_question_list, 5)
+        my_contests = Contest.objects.filter(creator=request.user)
+        latest_contest_list = my_contests.all().order_by('-pub_date')
+        paginator = Paginator(latest_contest_list, 5)
         try:
             page = int(request.GET.get('page', '1'))
         except:
             page = 1
 
         try:
-            questions = paginator.page(page)
+            contests = paginator.page(page)
         except:
-            questions = paginator.page(paginator.num_pages)
+            contests = paginator.page(paginator.num_pages)
 
-        return render(request, 'lists/mylists.html', {'questions': questions})
+        return render(request, 'lists/mylists.html', {'contests': contests})
     else:
         return render(request, 'lists/mylists.html')
 
@@ -86,8 +86,8 @@ def createlist(request):
         return render(request, 'lists/createlist.html')
     else:
         try:
-            question_form = QuestionForm(request.POST)
-            newlist = question_form.save(commit=False)
+            contest_form = ContestForm(request.POST)
+            newlist = contest_form.save(commit=False)
             newlist.creator = request.user
             i = 1
             choices = []
@@ -107,7 +107,7 @@ def createlist(request):
                 newlist.save()
                 count = 1
                 for opt in options:
-                    choice = Choice.objects.create(choice_text=opt, votes=request.POST['votes'], question=newlist)
+                    choice = Choice.objects.create(choice_text=opt, votes=request.POST['votes'], contest=newlist)
                     choice.save()
                     try:
                         choice.choice_picture = request.FILES.get('choice_picture'+str(count))

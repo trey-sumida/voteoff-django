@@ -3,17 +3,20 @@ from django.conf import settings
 
 USER = settings.AUTH_USER_MODEL
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
+class Contest(models.Model):
+    contest_title = models.CharField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
     creator = models.ForeignKey(USER, on_delete=models.CASCADE, related_name='creator')
+    contest_description = models.TextField(max_length=300, default='')
+    contest_image = models.ImageField(null=True, blank=True)
+
 
     def __str__(self):
-        return self.question_text
+        return self.contest_title
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     choice_picture = models.ImageField(null=True, blank=True)
     votes = models.IntegerField(default=0)

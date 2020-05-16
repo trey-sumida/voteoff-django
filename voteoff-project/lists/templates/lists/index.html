@@ -5,14 +5,14 @@
 {% endblock %}
 {% block content %}
 <div class="padding">
-<h1 class="text-center mb-3">Public Lists</h1>
-{% if questions %}
-    {% for question in questions.object_list %}
+<h1 class="text-center mb-3">Public Contests</h1>
+{% if contests %}
+    {% for contest in contests.object_list %}
         <div class="card mb-3">
             <div class="card-body">
-                <p class="lead">{{ question.question_text }}</p>
-                <a type="button" href="{% url 'lists:detail' question.id %}" class="btn-primary btn-sm">Vote Now</a>
-                <a type="button" href="{% url 'lists:results' question.id %}" class="btn-primary btn-sm">Results</a>
+                <p class="lead">{{ contest.contest_title }}</p>
+                <a type="button" href="{% url 'lists:detail' contest.id %}" class="btn-primary btn-sm">Vote Now</a>
+                <a type="button" href="{% url 'lists:results' contest.id %}" class="btn-primary btn-sm">Results</a>
             </div>
         </div>
     {% endfor %}
@@ -21,18 +21,18 @@
 {% endif %}
 <nav>
     <ul class="pagination">
-    {% if questions.has_previous %}
-        <li class="page-item"><a class="page-link" href="?page={{ questions.previous_page_number }}">Previous</a></li>
+    {% if contests.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ contests.previous_page_number }}">Previous</a></li>
     {% endif %}
-    {% for pg in questions.paginator.page_range %}
-        {% if questions.number == pg %}
+    {% for pg in contests.paginator.page_range %}
+        {% if contests.number == pg %}
             <li class="page-item active"><a class="page-link" href="?page={{ pg }}">{{ pg }}</a></li>
         {% else %}
             <li class="page-item"><a class="page-link" href="?page={{ pg }}">{{ pg }}</a></li>
         {% endif %}
     {% endfor %}
-    {% if questions.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{ questions.next_page_number }}">Next</a></li>
+    {% if contests.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ contests.next_page_number }}">Next</a></li>
     {% endif %}
     </ul>
 </nav>
