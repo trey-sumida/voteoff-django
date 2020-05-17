@@ -8,6 +8,7 @@ from .forms import ContestForm
 from django.core.paginator import Paginator
 from account.models import Account as User
 from django.utils import timezone
+from datetime import datetime
 
 # Get quesitons and display them
 def index(request):
@@ -102,8 +103,12 @@ def mylists(request):
 
 
 def createlist(request):
+    form = ContestForm(initial = {
+        "start_date": datetime(2020, 5, 17, 0, 0),
+        "end_date": datetime(2020, 5, 18, 0, 0),
+    })
     if request.method == "GET":
-        return render(request, "lists/createlist.html")
+        return render(request, "lists/createlist.html", {'form': form})
     else:
         try:
             contest_form = ContestForm(request.POST)
@@ -125,7 +130,7 @@ def createlist(request):
                 if stripped != "":
                     options.append(stripped)
             if len(options) < 2:
-                form = {
+                filled_form = {
                     "contest_title": newlist.contest_title,
                     "contest_description": newlist.contest_description,
                     "public": newlist.public,
@@ -133,7 +138,7 @@ def createlist(request):
                 return render(
                     request,
                     "lists/createlist.html",
-                    {"error": "More options needed", "form": form},
+                    {"error": "More options needed", "filled_form": filled_form, 'form': form},
                 )
             else:
                 newlist.save()
@@ -153,6 +158,6 @@ def createlist(request):
                     count += 1
         except:
             return render(
-                request, "lists/createlist.html", {"error": "List failed to create"}
+                request, "lists/createlist.html", {"error": "List failed to create", 'form': form}
             )
         return redirect("lists:mylists")
