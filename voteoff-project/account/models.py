@@ -53,3 +53,13 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+class AccountDemographics(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    first_name = models.CharField(blank=True, max_length=20)
+    last_name = models.CharField(blank=True, max_length=20)
+    visibility = models.BooleanField(default=False)
+    points = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.account.username
