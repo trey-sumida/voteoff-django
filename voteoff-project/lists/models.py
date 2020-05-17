@@ -6,13 +6,13 @@ USER = settings.AUTH_USER_MODEL
 
 class Contest(models.Model):
     contest_title = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField(auto_now_add=True, editable=False)
     public = models.BooleanField(default=False)
     creator = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="creator")
     contest_description = models.TextField(max_length=300, default="")
     contest_image = models.ImageField(null=True, blank=True)
-    start_date = models.DateTimeField(null=True)
-    end_date = models.DateTimeField(null=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
 
     def __str__(self):
         return self.contest_title

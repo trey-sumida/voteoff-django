@@ -112,7 +112,8 @@ def createlist(request):
     else:
         try:
             contest_form = ContestForm(request.POST)
-            newlist = contest_form.save(commit=False)
+            if contest_form.is_valid():
+                newlist = contest_form.save(commit=False)
             try:
                 newlist.contest_image = request.FILES.get("contest_image")
                 newlist.creator = request.user
