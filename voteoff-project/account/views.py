@@ -40,5 +40,9 @@ def loginuser(request):
 def userprofile(request):
     if request.method == 'GET':
         account = Account.objects.get(pk=request.user.id)
-        account_details = AccountDemographics.objects.get_or_create(account=request.user)
+        try:
+            account_details = AccountDemographics.objects.get(account=request.user)
+        except:
+            account_details = AccountDemographics.objects.create(account=request.user)
+            account_details.save()
         return render(request, 'account/userprofile.html', {'account': account, 'account_details': account_details})
