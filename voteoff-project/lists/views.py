@@ -164,8 +164,8 @@ def createlist(request):
         if (newlist.public):
             return redirect("lists:detail", contest_id=newlist.id)
         else:
-            return redirect("lists:detail", contest_id=newlist.id)
+            return redirect("lists:addusers", contest_id=newlist.id)
 
 def addusers(request, contest_id):
-    contest = get_object_or_404(Contest, pk=contest_id)
+    contest = Contest.objects.get(pk=contest_id)
     return render(request, "lists/addusers.html", {'contest': contest})
