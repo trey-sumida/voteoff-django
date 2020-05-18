@@ -9,18 +9,34 @@
 <div class="userprofile">
     <h1>{{account.username}} Profile Page</h1>
     <form>
+      <div class="row">
+        <div class="col">
         <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" value='{{account.email}}' disabled>
+          <label for="username">Username</label>
+          <input type="username" class="form-control" id="username" value='{{account.username}}' disabled>
         </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" value='{{account.email}}' disabled>
+          </div>
+        </div>
+      </div>
+        <div class="row">
+          <div class="col">
         <div class="form-group">
             <label for="first_name">First Name</label>
             <input placeholder="First Name" class="form-control" id="first_name" value="{{account_details.first_name}}" disabled>
-          </div>        
+          </div>   
+          </div>
+          <div class="col">   
         <div class="form-group">
             <label for="last_name">Last Name</label>
             <input placeholder="Last Name" class="form-control" id="last_name" value="{{account_details.last_name}}" disabled>
           </div>
+        </div>  
+      </div>  
     </form>
 </div>
 {% endblock %}
