@@ -8,5 +8,6 @@ urlpatterns = [
     path('lists/mylists', views.mylists, name='mylists'),
     path('lists/details/<int:contest_id>/', views.detail, name='detail'),
     path('lists/results/<int:contest_id>/', views.results, name='results'),
-    path('lists/<int:contest_id>/vote/', views.vote, name='vote')
+    path('lists/vote/<int:contest_id>/', views.vote, name='vote'),
+    path('lists/addusers/<int:contest_id>/', views.addusers, name='addusers'),
 ]

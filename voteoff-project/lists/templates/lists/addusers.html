@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
+{% endblock %}
+{% block content %}
+<div class="details-div">
+{{contest.id}}
+</div>
+{% endblock %}
