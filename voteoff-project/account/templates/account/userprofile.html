@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="userprofile">
+    <h1>{{account.username}} Profile Page</h1>
+    <h2>First name</h2>
+    {{account_demographics.first_name}}
+    <h2>Last name</h2>
+    {{account_demographics.last_name}}
+</div>
+{% endblock %}

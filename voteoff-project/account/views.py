@@ -3,6 +3,7 @@ from .forms import RegisterForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+from .models import Account, AccountDemographics
 
 # Register
 def registeracc(request):
@@ -12,6 +13,7 @@ def registeracc(request):
             form.save()
             user = authenticate(request, username=request.POST['username'], password=request.POST['password1'])
             login(request, user)
+
             return redirect('index')
         else:
             return render(request, 'account/register.html', {'form': form, 'error': form.errors})
@@ -34,3 +36,9 @@ def loginuser(request):
         else:
             login(request, user)
             return redirect('index')
+
+def userprofile(request):
+    if request.method == 'GET':
+        account = Account.objects.get(pk=request.user.id)
+        account_details = AccountDemographics.objects.get_or_create(account=request.user)
+        return render(request, 'account/userprofile.html', {'account': account, 'account_details': account_details})
