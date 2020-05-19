@@ -10,7 +10,7 @@ from account.models import Account as User
 from django.utils import timezone
 from datetime import datetime
 
-# Get quesitons and display them
+# Get contests and display them
 def index(request):
     user_contests = Contest.objects.filter(public=True)
     latest_contest_list = user_contests.all().order_by("-pub_date")
@@ -32,7 +32,7 @@ def index(request):
     )
 
 
-# Show specific contest and choices
+# Show specific contest and choices associated
 def detail(request, contest_id):
     try:
         contest = Contest.objects.get(pk=contest_id)
@@ -59,13 +59,12 @@ def results(request, contest_id):
 
 # Vote for a contest choice
 def vote(request, contest_id):
-    # print(request.POST['choice'])
     contest = get_object_or_404(Contest, pk=contest_id)
     try:
         increment_choice = contest.choice_set.get(pk=request.POST["inc_choice"])
         decrement_choice = contest.choice_set.get(pk=request.POST["dec_choice"])
     except (KeyError, Choice.DoesNotExist):
-        # Redisplay the contest voting form.
+        # Redisplay the voting form if user error occurs
         now = timezone.now()
         if now > contest.start_date:
             started = True
@@ -80,18 +79,17 @@ def vote(request, contest_id):
             "lists/detail.html",
             {"contest": contest, "error_message": "You didn't select a choice.", "has_started": started, "has_ended": ended},
         )
-    else:
-        increment_choice.votes += 1
-        decrement_choice.votes -= 1
-        increment_choice.save()
-        decrement_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse("lists:results", args=(contest.id,)))
+    increment_choice.votes += 1
+    decrement_choice.votes -= 1
+    increment_choice.save()
+    decrement_choice.save()
+    # Always return an HttpResponseRedirect after successfully dealing
+    # with POST data. This prevents data from being posted twice if a
+    # user hits the Back button.
+    return HttpResponseRedirect(reverse("lists:results", args=(contest.id,)))
 
-
-def mylists(request):
+# Displays the contests that the user created
+def mycontests(request):
     if request.user.is_authenticated:
         my_contests = Contest.objects.filter(creator=request.user)
         latest_contest_list = my_contests.all().order_by("-pub_date")
@@ -106,29 +104,30 @@ def mylists(request):
         except:
             contests = paginator.page(paginator.num_pages)
 
-        return render(request, "lists/mylists.html", {"contests": contests})
+        return render(request, "lists/mycontests.html", {"contests": contests})
     else:
-        return render(request, "lists/mylists.html")
+        return render(request, "lists/mycontests.html")
 
 
-def createlist(request):
+# Allows user to create a contest
+def createcontest(request):
     form = ContestForm(initial = {
         "start_date": datetime(2020, 5, 17, 0, 0),
         "end_date": datetime(2020, 5, 18, 0, 0),
     })
     if request.method == "GET":
-        return render(request, "lists/createlist.html", {'form': form})
+        return render(request, "lists/createcontest.html", {'form': form})
     else:
         try:
             contest_form = ContestForm(request.POST)
             if contest_form.is_valid():
-                newlist = contest_form.save(commit=False)
+                newcontest = contest_form.save(commit=False)
             try:
-                newlist.contest_image = request.FILES.get("contest_image")
-                newlist.creator = request.user
-                newlist.save(commit=False)
+                newcontest.contest_image = request.FILES.get("contest_image")
+                newcontest.creator = request.user
+                newcontest.save(commit=False)
             except:
-                newlist.creator = request.user
+                newcontest.creator = request.user
             i = 1
             choices = []
             while request.POST.get("choice_text" + str(i)):
@@ -141,21 +140,21 @@ def createlist(request):
                     options.append(stripped)
             if len(options) < 2:
                 filled_form = {
-                    "contest_title": newlist.contest_title,
-                    "contest_description": newlist.contest_description,
-                    "public": newlist.public,
+                    "contest_title": newcontest.contest_title,
+                    "contest_description": newcontest.contest_description,
+                    "public": newcontest.public,
                 }
                 return render(
                     request,
-                    "lists/createlist.html",
+                    "lists/createcontest.html",
                     {"error": "More options needed", "filled_form": filled_form, 'form': form},
                 )
             else:
-                newlist.save()
+                newcontest.save()
                 count = 1
                 for opt in options:
                     choice = Choice.objects.create(
-                        choice_text=opt, votes=request.POST["votes"], contest=newlist
+                        choice_text=opt, votes=request.POST["votes"], contest=newcontest
                     )
                     choice.save()
                     try:
@@ -168,12 +167,12 @@ def createlist(request):
                     count += 1
         except:
             return render(
-                request, "lists/createlist.html", {"error": "List failed to create", 'form': form}
+                request, "lists/createcontest.html", {"error": "Contest failed to create", 'form': form}
             )
-        if (newlist.public):
-            return redirect("lists:detail", contest_id=newlist.id)
+        if (newcontest.public):
+            return redirect("lists:detail", contest_id=newcontest.id)
         else:
-            return redirect("lists:addusers", contest_id=newlist.id)
+            return redirect("lists:addusers", contest_id=newcontest.id)
 
 def addusers(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
