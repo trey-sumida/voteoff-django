@@ -7,15 +7,15 @@
 
 {% block content %}
 <div class="wrapper">
-{% if error %}
-<div class="alert alert-danger" role="alert">
-    {{ error }}
-  </div>
-{% endif %}
 <div class="login">
 {% if user.is_authenticated %}
 <h1>You are already logged in!</h1>
 {% else %}
+{% if error %}
+<div class="alert alert-danger" role="alert">
+  {{ error }}
+</div>
+{% endif %}
 <h1 class="login-header">Login</h1>
 <hr class="divider"/>
 <form class="login-form" method="POST">

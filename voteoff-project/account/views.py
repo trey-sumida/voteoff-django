@@ -13,7 +13,6 @@ def registeracc(request):
             form.save()
             user = authenticate(request, username=request.POST['username'], password=request.POST['password1'])
             login(request, user)
-
             return redirect('index')
         else:
             return render(request, 'account/register.html', {'form': form, 'error': form.errors})

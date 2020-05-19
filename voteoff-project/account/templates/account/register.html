@@ -7,6 +7,10 @@
 
 {% block content %}
 <div class="wrapper">
+<div class="login">
+{% if user.is_authenticated %}
+<h1>You are already logged in!</h1>
+{% else %}
 {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -16,10 +20,6 @@
         {% endfor %}
     {% endfor %}
 {% endif %}
-<div class="login">
-{% if user.is_authenticated %}
-<h1>You are already logged in!</h1>
-{% else %}
 <h1 class="login-header">Register</h1>
 <hr class="divider"/>
 <form class="login-form" method="POST">

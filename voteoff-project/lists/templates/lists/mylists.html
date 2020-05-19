@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}" />
 {% endblock %} {% block content %}
 <div class="padding">
-  <h1 class="text-center mb-3">My Lists</h1>
+  <h1 class="text-center mb-3">My Contests</h1>
   {% if user.is_authenticated %} 
   {% if contests %} 
   {% for contest in contests.object_list %}

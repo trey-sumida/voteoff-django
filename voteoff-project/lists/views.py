@@ -66,10 +66,19 @@ def vote(request, contest_id):
         decrement_choice = contest.choice_set.get(pk=request.POST["dec_choice"])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the contest voting form.
+        now = timezone.now()
+        if now > contest.start_date:
+            started = True
+        else:
+            started = False
+        if now > contest.end_date:
+            ended = True
+        else:
+            ended = False
         return render(
             request,
             "lists/detail.html",
-            {"contest": contest, "error_message": "You didn't select a choice.",},
+            {"contest": contest, "error_message": "You didn't select a choice.", "has_started": started, "has_ended": ended},
         )
     else:
         increment_choice.votes += 1
