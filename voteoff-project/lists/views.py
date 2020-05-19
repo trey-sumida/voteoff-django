@@ -111,7 +111,7 @@ def mycontests(request):
 
 # Allows user to create a contest
 def createcontest(request):
-    form = ContestForm(initial = {
+    form = ContestForm(initial={
         "start_date": datetime(2020, 5, 17, 0, 0),
         "end_date": datetime(2020, 5, 18, 0, 0),
     })
@@ -174,6 +174,7 @@ def createcontest(request):
         else:
             return redirect("lists:addusers", contest_id=newcontest.id)
 
+# Allows user to add people to private contest
 def addusers(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
     return render(request, "lists/addusers.html", {'contest': contest})
