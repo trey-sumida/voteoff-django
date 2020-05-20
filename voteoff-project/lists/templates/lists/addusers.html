@@ -13,5 +13,11 @@
     <input class="form-control" name="allowed_user" id="allowed_user">
     <button type="submit">Add User</button>
 </form>
+<h1>Allowed users:</h1>
+<ul>
+    {% for user in allowed_users %}
+    <li>{{ user.allowed_user }}</li>
+    {% endfor %}
+</ul>
 </div>
 {% endblock %}

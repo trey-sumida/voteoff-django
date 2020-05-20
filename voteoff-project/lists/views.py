@@ -180,16 +180,19 @@ def createcontest(request):
 # Allows user to add people to private contest
 def addusers(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
+    allowed_users = AllowedUsers.objects.filter(contest=contest)
     if request.method == "GET":
-        return render(request, "lists/addusers.html", {'contest': contest})
+        return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users})
     else:
         try:
             user = Account.objects.get(username=request.POST['allowed_user'])
         except:
-            return render(request, "lists/addusers.html", {'contest': contest, 'message': "User does not exist"})
+            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': "User does not exist"})
         new_allowed_user, created = AllowedUsers.objects.get_or_create(contest=contest, allowed_user=user)
         new_allowed_user.save()
         if created:
-            return render(request, "lists/addusers.html", {'contest': contest, 'message': new_allowed_user.allowed_user.username + ' was successfully added to the private list'})
+            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username 
+            + ' was successfully added to the private list'})
         else:
-            return render(request, "lists/addusers.html", {'contest': contest, 'message': new_allowed_user.allowed_user.username + ' has already been added'})
+            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username 
+            + ' has already been added'})
