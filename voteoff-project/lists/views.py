@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
-from .models import Contest, Choice
+from .models import Contest, Choice, AllowedUsers
+from account.models import Account
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .forms import ContestForm
@@ -172,9 +173,23 @@ def createcontest(request):
         if (newcontest.public):
             return redirect("lists:detail", contest_id=newcontest.id)
         else:
+            allowed_users = AllowedUsers.objects.create(contest=newcontest, allowed_user=request.user)
+            allowed_users.save()
             return redirect("lists:addusers", contest_id=newcontest.id)
 
 # Allows user to add people to private contest
 def addusers(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
-    return render(request, "lists/addusers.html", {'contest': contest})
+    if request.method == "GET":
+        return render(request, "lists/addusers.html", {'contest': contest})
+    else:
+        try:
+            user = Account.objects.get(username=request.POST['allowed_user'])
+        except:
+            return render(request, "lists/addusers.html", {'contest': contest, 'message': "User does not exist"})
+        new_allowed_user, created = AllowedUsers.objects.get_or_create(contest=contest, allowed_user=user)
+        new_allowed_user.save()
+        if created:
+            return render(request, "lists/addusers.html", {'contest': contest, 'message': new_allowed_user.allowed_user.username})
+        else:
+            return render(request, "lists/addusers.html", {'contest': contest, 'message': "User has already been added"})

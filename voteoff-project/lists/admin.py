@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contest, Choice
+from .models import Contest, Choice, AllowedUsers
 
 admin.site.site_header = "VoteOff Admin"
 admin.site.site_title = "VoteOff Admin Area"
@@ -21,4 +21,5 @@ class ContestAdmin(admin.ModelAdmin):
     inlines = [ChoiceInLine]
 
 
+admin.site.register(AllowedUsers)
 admin.site.register(Contest, ContestAdmin)
