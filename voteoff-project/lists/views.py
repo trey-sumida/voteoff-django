@@ -190,6 +190,6 @@ def addusers(request, contest_id):
         new_allowed_user, created = AllowedUsers.objects.get_or_create(contest=contest, allowed_user=user)
         new_allowed_user.save()
         if created:
-            return render(request, "lists/addusers.html", {'contest': contest, 'message': new_allowed_user.allowed_user.username})
+            return render(request, "lists/addusers.html", {'contest': contest, 'message': new_allowed_user.allowed_user.username + ' was successfully added to the private list'})
         else:
-            return render(request, "lists/addusers.html", {'contest': contest, 'message': "User has already been added"})
+            return render(request, "lists/addusers.html", {'contest': contest, 'message': new_allowed_user.allowed_user.username + ' has already been added'})
