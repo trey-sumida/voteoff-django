@@ -26,3 +26,7 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+class AllowedUsers(models.Model):
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    allowed_user = models.ForeignKey(USER, on_delete=models.CASCADE)
