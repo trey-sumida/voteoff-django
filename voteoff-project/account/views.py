@@ -29,7 +29,11 @@ def loginuser(request):
     if request.method == 'GET':
         return render(request, 'account/login.html', {'form':AuthenticationForm()})
     else:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        try:
+            acc = Account.objects.get(email=request.POST['username'])
+            user = authenticate(request, username=acc.username, password=request.POST['password'])
+        except:
+            user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
             return render(request, 'account/login.html', {'form':AuthenticationForm(), 'error':'Username and password did not match'})
         else:
