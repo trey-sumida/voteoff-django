@@ -71,9 +71,12 @@
 <br/>
 {% if has_started %}
 {% if not has_ended %}
+{% if can_vote %}
 <button id="rv" type="submit" class="btn btn-success">Vote</button>
 <h1>Contest ends on {{contest.end_date | localize}}</h1>
-
+{% else %}
+<h1>You cannot vote for another {{ gap_minutes }} minutes</h1>
+{% endif %}
 {% else %}
 <h1>Contest ended on {{contest.end_date | localize}}</h1>
 {% endif %}

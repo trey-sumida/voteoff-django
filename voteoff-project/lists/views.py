@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
-from .models import Contest, Choice, AllowedUsers
+from .models import Contest, Choice, AllowedUsers, LastVote
 from account.models import Account
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -46,9 +46,24 @@ def detail(request, contest_id):
             ended = True
         else:
             ended = False
+        
+        does_exist = LastVote.objects.filter(contest=contest, user=request.user).exists()
+        if does_exist:
+            last_vote = LastVote.objects.get(contest=contest, user=request.user)
+            last_vote_time = last_vote.time_voted
+            gap = timezone.now() - last_vote_time
+            gap_minutes = gap.seconds/60
+            if gap_minutes >= 60:
+                can_vote = True
+            else:
+                can_vote = False
+            gap_minutes = 60-gap_minutes
+        else:
+            can_vote = True
+            gap_minutes = 0
     except Contest.DoesNotExist:
         raise Http404("Contest does not exist")
-    return render(request, "lists/detail.html", {"contest": contest, "has_started": started, "has_ended": ended})
+    return render(request, "lists/detail.html", {"contest": contest, "has_started": started, "has_ended": ended, "can_vote": can_vote, "gap_minutes": gap_minutes})
 
 
 # Get contest and display results
@@ -74,15 +89,37 @@ def vote(request, contest_id):
             ended = True
         else:
             ended = False
+        
+        does_exist = LastVote.objects.filter(contest=contest, user=request.user).exists()
+        if does_exist:
+            last_vote = LastVote.objects.get(contest=contest, user=request.user)
+            last_vote_time = last_vote.time_voted
+            gap = timezone.now() - last_vote_time
+            gap_minutes = gap.seconds/60
+            if gap_minutes >= 60:
+                can_vote = True
+            else:
+                can_vote = False
+            gap_minutes = 60-gap_minutes
+        else:
+            can_vote = True
+            gap_minutes = 0
         return render(
             request,
             "lists/detail.html",
-            {"contest": contest, "error_message": "You didn't select a choice.", "has_started": started, "has_ended": ended},
+            {"contest": contest, "error_message": "You didn't select a choice.", "has_started": started, "has_ended": ended, "can_vote": can_vote, "gap_minutes": gap_minutes},
         )
     increment_choice.votes += 1
     decrement_choice.votes -= 1
     increment_choice.save()
     decrement_choice.save()
+    try:
+        last_vote = LastVote.objects.get(contest=contest, user=request.user)
+        last_vote.time_voted = timezone.now()
+        last_vote.save()
+    except:
+        last_vote = LastVote.objects.create(contest=contest, user=request.user, time_voted=timezone.now())
+        last_vote.save()
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.
