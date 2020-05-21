@@ -46,7 +46,6 @@ def detail(request, contest_id):
             ended = True
         else:
             ended = False
-    
     except Contest.DoesNotExist:
         raise Http404("Contest does not exist")
     return render(request, "lists/detail.html", {"contest": contest, "has_started": started, "has_ended": ended})
