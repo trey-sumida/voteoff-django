@@ -4,7 +4,6 @@ from django.http import Http404, HttpResponseRedirect
 from .models import Contest, Choice, AllowedUsers, LastVote
 from account.models import Account
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, logout, authenticate
 from .forms import ContestForm
 from django.core.paginator import Paginator
 from account.models import Account as User
@@ -227,8 +226,8 @@ def addusers(request, contest_id):
         new_allowed_user, created = AllowedUsers.objects.get_or_create(contest=contest, allowed_user=user)
         new_allowed_user.save()
         if created:
-            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username 
+            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username
             + ' was successfully added to the private list'})
         else:
-            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username 
+            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username
             + ' has already been added'})
