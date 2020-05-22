@@ -18,7 +18,6 @@ def index(request):
         page = int(request.GET.get("page", "1"))
     except:
         page = 1
-
     try:
         contests = paginator.page(page)
     except:

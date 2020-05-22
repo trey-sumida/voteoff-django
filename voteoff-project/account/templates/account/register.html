@@ -20,6 +20,11 @@
         {% endfor %}
     {% endfor %}
 {% endif %}
+{% if error %}
+<div class="alert alert-danger">
+  <strong>{{ error|escape }}</strong>
+</div>
+{% endif %}
 <h1 class="login-header">Register</h1>
 <hr class="divider"/>
 <form class="login-form" method="POST">

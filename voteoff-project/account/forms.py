@@ -19,3 +19,10 @@ class RegisterForm(UserCreationForm):
         if user_count > 0:
             raise forms.ValidationError("Email has already been registered with another account")
         return email
+    
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        user_count = Account.objects.filter(username=username).count()
+        if user_count > 0:
+            raise forms.ValidationError("Username has already been registered with another account")
+        return username
