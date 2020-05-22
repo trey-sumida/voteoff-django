@@ -215,10 +215,13 @@ def addusers(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
     allowed_users = AllowedUsers.objects.filter(contest=contest)
     if request.method == "GET":
-        return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users})
+        if contest.public:
+             raise Http404("Contest is public so specific users cannot be added")
+        else:
+            return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users})
     else:
         try:
-            user = Account.objects.get(username=request.POST['allowed_user'])
+            user = Account.objects.get(username__iexact=request.POST['allowed_user'])
         except:
             return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': "User does not exist"})
         new_allowed_user, created = AllowedUsers.objects.get_or_create(contest=contest, allowed_user=user)
