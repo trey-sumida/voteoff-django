@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
 from .models import Contest, Choice, AllowedUsers, LastVote
 from account.models import Account
-from django.contrib.auth.forms import AuthenticationForm
 from .forms import ContestForm
 from django.core.paginator import Paginator
 from account.models import Account as User
