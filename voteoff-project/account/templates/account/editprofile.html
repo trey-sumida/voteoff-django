@@ -9,18 +9,22 @@
 {% if request.user.is_authenticated %}
 <div class="userprofile">
     <h1>{{account.username}} Profile Page</h1>
-    <form>
+    {% if error %}
+    <h1>{{error}}</h1>
+    {% endif %}
+    <form action="{% url 'account:editprofile' %}" method="POST">
+    {% csrf_token %}
       <div class="row">
         <div class="col">
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="username" class="form-control" id="username" value='{{account.username}}' disabled>
+          <input name="username" type="username" class="form-control" id="username" value='{{account.username}}'>
         </div>
         </div>
         <div class="col">
           <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" value='{{account.email}}' disabled>
+            <input type="email" name="email" class="form-control" id="email" value='{{account.email}}'>
           </div>
         </div>
       </div>
@@ -28,19 +32,18 @@
           <div class="col">
         <div class="form-group">
             <label for="first_name">First Name</label>
-            <input placeholder="First Name" class="form-control" id="first_name" value="{{account_details.first_name}}" disabled>
+            <input name="first_name" placeholder="First Name" class="form-control" id="first_name" value="{{account_details.first_name}}">
           </div>   
           </div>
           <div class="col">   
         <div class="form-group">
             <label for="last_name">Last Name</label>
-            <input placeholder="Last Name" class="form-control" id="last_name" value="{{account_details.last_name}}" disabled>
+            <input name="last_name" placeholder="Last Name" class="form-control" id="last_name" value="{{account_details.last_name}}">
           </div>
         </div>  
-      </div>  
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
     </form>
-    <a class="btn btn-primary" href="{% url 'account:editprofile' %}">
-      Edit Profile</a>
 </div>
 {% else %}
 <div class="userprofile">

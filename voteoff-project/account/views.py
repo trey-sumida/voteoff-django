@@ -56,11 +56,55 @@ def loginuser(request):
             return redirect('index')
 
 def userprofile(request):
-    if request.method == 'GET':
-        account = Account.objects.get(pk=request.user.id)
-        try:
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            account = Account.objects.get(pk=request.user.id)
+            try:
+                account_details = AccountDemographics.objects.get(account=request.user)
+            except:
+                account_details = AccountDemographics.objects.create(account=request.user)
+                account_details.save()
+            return render(request, 'account/userprofile.html', {'account': account, 'account_details': account_details})
+    else:
+        return render(request, 'account/userprofile.html')
+
+def editprofile(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            account = Account.objects.get(pk=request.user.id)
+            try:
+                account_details = AccountDemographics.objects.get(account=request.user)
+            except:
+                account_details = AccountDemographics.objects.create(account=request.user)
+                account_details.save()
+            return render(request, 'account/editprofile.html', {'account': account, 'account_details': account_details})
+        else:
+            account = Account.objects.get(pk=request.user.id)
             account_details = AccountDemographics.objects.get(account=request.user)
-        except:
-            account_details = AccountDemographics.objects.create(account=request.user)
+            username_taken = False
+            email_taken = False
+            try:
+                if account.username != request.POST['username']:
+                    user = Account.objects.get(username__iexact=request.POST['username'])
+                    username_taken = True
+            except:
+                account.username = request.POST['username']
+                account.save()
+            try:
+                if account.email != request.POST['email']:
+                    user = Account.objects.get(email__iexact=request.POST['email'])
+                    email_taken = True
+            except:
+                account.email = request.POST['email']
+                account.save()
+            account_details.first_name = request.POST['first_name']
+            account_details.last_name = request.POST['last_name']
             account_details.save()
-        return render(request, 'account/userprofile.html', {'account': account, 'account_details': account_details})
+            if username_taken:
+                return render(request, 'account/editprofile.html', {'error': "username is already taken", 'account': account, 'account_details': account_details})
+            elif email_taken:
+                return render(request, 'account/editprofile.html', {'error': "Email is already associated with another account", 'account': account, 'account_details': account_details})
+            else:
+                return redirect('account:userprofile')
+    else:
+        return render(request, 'account/editprofile.html')
