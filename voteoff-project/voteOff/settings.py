@@ -81,14 +81,26 @@ WSGI_APPLICATION = 'voteOff.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'voteoff-project',
+            'USER': 'postgres',
+            'PASSWORD': 'Oreo808.',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'voteoff-project',
-        'USER': 'postgres',
-        'PASSWORD': 'Oreo808.',
+        'NAME': 'voteoffDB',
+        'USER': 'tsumida',
+        'PASSWORD': 'Underdog24.',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '',
     }
 }
 
@@ -132,4 +144,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
