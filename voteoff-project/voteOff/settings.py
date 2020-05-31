@@ -28,7 +28,6 @@ DEBUG = False
 ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89', 'localhost']
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "pages", "static"),
     os.path.join(BASE_DIR, "account", "static"),
     os.path.join(BASE_DIR, "lists", "static"),
 ]
