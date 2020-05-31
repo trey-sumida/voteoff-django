@@ -27,10 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89', 'localhost']
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
 # Application definition
 
 INSTALLED_APPS = [
