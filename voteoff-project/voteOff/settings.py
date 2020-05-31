@@ -92,11 +92,11 @@ else:
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'voteoffdb',
-        'USER': 'tsumida',
-        'PASSWORD': 'Underdog24.',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'db-thevoteoff',
+        'USER': 'doadmin',
+        'PASSWORD': 'o3falh3xhv12dpu8',
+        'HOST': 'b-thevoteoff-do-user-7565072-0.a.db.ondigitalocean.com',
+        'PORT': '25060',
     }
 }
 
