@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sqajui!ju-kjybjdae4u60ppf@t11#-by8%xdb2%z#4h^#i1%s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89', 'localhost']
 
