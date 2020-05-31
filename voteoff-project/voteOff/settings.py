@@ -25,7 +25,7 @@ SECRET_KEY = 'sqajui!ju-kjybjdae4u60ppf@t11#-by8%xdb2%z#4h^#i1%s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['157.245.183.89', 'localhost']
+ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89', 'localhost']
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
