@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sqajui!ju-kjybjdae4u60ppf@t11#-by8%xdb2%z#4h^#i1%s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89', 'localhost']
 
@@ -92,11 +92,11 @@ else:
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db-thevoteoff',
-        'USER': 'doadmin',
-        'PASSWORD': 'o3falh3xhv12dpu8',
-        'HOST': 'b-thevoteoff-do-user-7565072-0.a.db.ondigitalocean.com',
-        'PORT': '25060',
+        'NAME': 'voteoffdb',
+        'USER': 'tsumida',
+        'PASSWORD': 'Underdog24.',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
