@@ -96,7 +96,7 @@ else:
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'voteoffDB',
+        'NAME': 'voteoffdb',
         'USER': 'tsumida',
         'PASSWORD': 'Underdog24.',
         'HOST': 'localhost',
