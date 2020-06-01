@@ -1,0 +1,34 @@
+.userprofile {
+    padding-top: 10vh;
+}
+
+.form-group {
+    padding-left: 1rem;
+}
+
+.padding {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    min-height: 100vh;
+}
+
+.login {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    background-color: #343a40;
+    color: #ebebeb;
+    min-height: 50vh;
+    min-width: 60vw;
+    height: auto;
+}
+
+.login-form {
+    width: 70%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.loginbutton {
+    text-align: center;
+}

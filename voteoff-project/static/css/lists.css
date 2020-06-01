@@ -1,0 +1,63 @@
+.options {
+    background-color: white;
+    border-style: solid;
+    border-radius: 0.5rem;
+}
+
+.form-group {
+    padding-left: 1rem;
+}
+
+.disabled-label {
+    opacity: 0.5;
+}
+
+.button-div {
+    text-align: center;
+    padding-top: 1rem;
+} #rv {
+    width: 25vw;
+}
+
+.padding {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    min-height: 100vh;
+}
+
+.login {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    background-color: #343a40;
+    color: #ebebeb;
+    min-height: 50vh;
+    min-width: 60vw;
+    height: auto;
+}
+
+#list {
+    padding: 1rem;
+    background-color: #343a40;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.details-div {
+    padding-top: 10vh;
+}
+
+.login-form {
+    width: 70%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.loginbutton {
+    text-align: center;
+}
+
+.choice-pic {
+    max-height: 10rem;
+    max-width: 15rem;
+}
