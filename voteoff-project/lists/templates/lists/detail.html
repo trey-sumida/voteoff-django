@@ -34,8 +34,8 @@
 						class="form-check-input" id="inc{{ forloop.counter }}" value="{{ choice.id }}" />
 					<label for="{{ forloop.counter }}">{{ choice.choice_text }}
 						{% if choice.choice_picture %}
-						<img class="choice-pic" src="{{choice.choice_picture.url}}"/></label>
-						{% endif %}
+						<img class="choice-pic" src="{{choice.choice_picture.url}}"/>
+						{% endif %}</label>
 				</div>
 				{% endif %}
 				{% endfor %}
@@ -60,7 +60,7 @@
 					<label for="{{ forloop.counter }}">
 						{{ choice.choice_text }}
 						{% if choice.choice_picture %}
-						<img class="choice-pic" src="{{choice.choice_picture.url}}"/></label>
+						<img class="choice-pic" src="{{choice.choice_picture.url}}"/>
 						{% endif %}</label>
 				</div>
 				{% endif %}
