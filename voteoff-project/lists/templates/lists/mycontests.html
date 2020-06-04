@@ -25,6 +25,10 @@
         class="btn-primary btn-sm"
         >Results</a
       >
+      <a
+      type="button"
+      href="{% url 'lists:deleteContest' contest.id %}"
+      class="btn-primary btn-sm">Delete</a>
     </div>
   </div>
   {% endfor %}

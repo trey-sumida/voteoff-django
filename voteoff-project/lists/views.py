@@ -241,3 +241,18 @@ def addusers(request, contest_id):
                 + ' has already been added'})
     else:
         return render(request, "lists/addusers.html")
+
+def deleteContest(request, contest_id):
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            contest = Contest.objects.get(pk=contest_id)
+            if contest.creator == request.user:
+                contest.delete()
+                return redirect("lists:mycontests")
+            else:
+                raise Http404("You are not authorized to delete this contest")
+        else:
+            raise Http404("You must login to delete contests")
+    else:
+        contest = Contest.objects.get(pk=contest_id)
+        return render(request, "lists/deletecontest.html", {'contest': contest})

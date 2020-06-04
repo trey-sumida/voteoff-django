@@ -10,4 +10,5 @@ urlpatterns = [
     path('lists/results/<int:contest_id>/', views.results, name='results'),
     path('lists/vote/<int:contest_id>/', views.vote, name='vote'),
     path('lists/addusers/<int:contest_id>/', views.addusers, name='addusers'),
+    path('lists/deletecontest/<int:contest_id>/', views.deleteContest, name='deleteContest'),
 ]
