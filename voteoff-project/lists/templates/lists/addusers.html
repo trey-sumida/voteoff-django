@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
 {% endblock %}
 {% block content %}
+{% if user.is_authenticated %}
 <div class="details-div" style="text-align: center;">
 <h1>Adding users for contest: {{ contest.contest_title }}</h1>
 {{message}}
@@ -20,4 +21,9 @@
     {% endfor %}
 </ul>
 </div>
+{% else %}
+<div class="details-div">
+    <h1>You must login to add users to a contest</h1>
+</div>
+{% endif %}
 {% endblock %}

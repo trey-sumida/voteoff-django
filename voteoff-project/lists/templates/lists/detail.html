@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}">
 {% endblock %}
 {% block content %}
+{% if user.is_authenticated %} 
 <div class="details-div">
 <h1 class="text-center mb-3">{{ contest.contest_title }}</h1>
 {% if error_message %}
@@ -90,4 +91,9 @@
 <a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' %}">To Public Contests</a>
 <a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:mycontests' %}">To My Contests</a>
 </div>
+{% else %}
+<div class="details-div">
+	<h1>You must login or create an account to view the contest details</h1>
+</div>
+{% endif %}
 {% endblock %}

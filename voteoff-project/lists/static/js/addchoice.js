@@ -1,7 +1,6 @@
 function addchoice() {
     var i = 1;
     name = "choice_picture".concat(i.toString());
-    console.log(name);
     while (document.getElementById("choice_picture".concat(i.toString()))) {
         i++;
     }
