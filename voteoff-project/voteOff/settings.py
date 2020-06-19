@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sqajui!ju-kjybjdae4u60ppf@t11#-by8%xdb2%z#4h^#i1%s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89', 'localhost']
+ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89']
 
 # Application definition
 
@@ -77,26 +77,15 @@ WSGI_APPLICATION = 'voteOff.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'voteoff-project',
-            'USER': 'postgres',
-            'PASSWORD': 'Oreo808.',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'voteoffdb',
-        'USER': 'tsumida',
-        'PASSWORD': 'Underdog24.',
-        'HOST': 'localhost',
-        'PORT': '',
+
+DATABASES = {
+'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'voteoffdb',
+    'USER': 'tsumida',
+    'PASSWORD': 'Underdog24.',
+    'HOST': 'localhost',
+    'PORT': '',
     }
 }
 
@@ -134,17 +123,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "account/static"),
-    os.path.join(BASE_DIR, "lists/static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+try:
+    from .local_settings import *
+except ImportError:
+    print('No local file. Must be on production server.')
