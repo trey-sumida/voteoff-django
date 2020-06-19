@@ -27,10 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89']
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -125,6 +121,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
