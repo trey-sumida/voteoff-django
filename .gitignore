@@ -7,3 +7,7 @@ db.sqlite3
 db.sqlite3-journal
 static_files
 media
+.vscode/
+settings.json
+Pipfile
+Pipfile.lock
