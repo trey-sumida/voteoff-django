@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sqajui!ju-kjybjdae4u60ppf@t11#-by8%xdb2%z#4h^#i1%s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['app.thevoteoff.com', '157.245.183.89']
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -130,6 +130,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+try:
+    from .local_settings import *
+except ImportError:
+    print('No local file. Must be on production server.')
