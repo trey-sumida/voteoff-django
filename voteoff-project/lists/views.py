@@ -76,7 +76,32 @@ def vote(request, contest_id):
         try:
             increment_choice = contest.choice_set.get(pk=request.POST["inc_choice"])
             decrement_choice = contest.choice_set.get(pk=request.POST["dec_choice"])
+            if increment_choice == decrement_choice:
+                valid = False
+                message = "Good try! You know how to change html! Please select 2 different choices."
+            else:
+                valid = True
         except (KeyError, Choice.DoesNotExist):
+            valid = False
+            message =  "You didn't select a choice."
+        
+        if valid:
+            increment_choice.votes += 1
+            decrement_choice.votes -= 1
+            increment_choice.save()
+            decrement_choice.save()
+            try:
+                last_vote = LastVote.objects.get(contest=contest, user=request.user)
+                last_vote.time_voted = timezone.now()
+                last_vote.save()
+            except:
+                last_vote = LastVote.objects.create(contest=contest, user=request.user, time_voted=timezone.now())
+                last_vote.save()
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
+            return HttpResponseRedirect(reverse("lists:results", args=(contest.id,)))
+        else:
             # Redisplay the voting form if user error occurs
             now = timezone.now()
             if now > contest.start_date:
@@ -105,23 +130,8 @@ def vote(request, contest_id):
             return render(
                 request,
                 "lists/detail.html",
-                {"contest": contest, "error_message": "You didn't select a choice.", "has_started": started, "has_ended": ended, "can_vote": can_vote, "gap_minutes": gap_minutes},
+                {"contest": contest, "error_message": message, "has_started": started, "has_ended": ended, "can_vote": can_vote, "gap_minutes": gap_minutes},
             )
-        increment_choice.votes += 1
-        decrement_choice.votes -= 1
-        increment_choice.save()
-        decrement_choice.save()
-        try:
-            last_vote = LastVote.objects.get(contest=contest, user=request.user)
-            last_vote.time_voted = timezone.now()
-            last_vote.save()
-        except:
-            last_vote = LastVote.objects.create(contest=contest, user=request.user, time_voted=timezone.now())
-            last_vote.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse("lists:results", args=(contest.id,)))
     else:
         return render(request, "lists/detail.html")
 
