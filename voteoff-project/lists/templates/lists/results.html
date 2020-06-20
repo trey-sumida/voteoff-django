@@ -1,11 +1,14 @@
-{% extends 'base.html' %} {% load static %} {% block extrahead %}
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/lists.css' %}" />
-{% endblock %} {% block content %}
+{% endblock %}
+{% block content %}
 <div class="details-div">
   <h1 class="mb-5 text-center">{{ contest.contest_title }}</h1>
 
   <ul class="list-group mb-5">
-    {% for choice in contest.choice_set.all %}
+    {% for choice in choices %}
     <li class="list-group-item">
       {{ choice.choice_text }}
 	  <span class="badge badge-success float-right">

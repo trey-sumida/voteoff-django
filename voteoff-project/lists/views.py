@@ -66,7 +66,8 @@ def detail(request, contest_id):
 # Get contest and display results
 def results(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
-    return render(request, "lists/results.html", {"contest": contest})
+    choices = Choice.objects.filter(contest=contest).order_by('-votes')
+    return render(request, "lists/results.html", {"contest": contest, "choices": choices})
 
 
 # Vote for a contest choice
