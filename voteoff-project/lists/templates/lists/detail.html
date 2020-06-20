@@ -7,93 +7,96 @@
 {% block content %}
 {% if user.is_authenticated %} 
 <div class="details-div">
-<h1 class="text-center mb-3">{{ contest.contest_title }}</h1>
-{% if error_message %}
-<p class="alert alert-danger">
-	<strong>{{ error_message }}</strong>
-</p>
-{% endif %}
+	<h1 class="text-center mb-3">{{ contest.contest_title }}</h1>
+	{% if error_message %}
+		<p class="alert alert-danger">
+			<strong>{{ error_message }}</strong>
+		</p>
+	{% endif %}
 	<form id="list" action="{% url 'lists:vote' contest.id %}" method="POST">
 		{% csrf_token %}
 		{% with len=contest.choice_set.all.count %}
-		<div class="row">
-			<div class="col-md-6">
-			<div class="col-sm options">
-				<h2>choose one of the following to add a point to:</h2>
-				<hr/>
-				{% for choice in contest.choice_set.all %}
-				{% if choice.votes == 0 %}
+		<div class="row justify-content-center">
+			<div class="col-auto">
+		<table class="table text-center">
+			<thead>
+			  <tr>
+				<th scope="col">ADD</th>
+				<th scope="col">CHOICE</th>
+				<th scope="col">REMOVE</th>
+			  </tr>
+			</thead>
+			<tbody>
+		{% for choice in contest.choice_set.all %}
+		<tr>
+			{% if choice.votes == 0 %}
+
 				<div class="form-group">
+					<td>
 					<input type="radio"  name="inc_choice" class="form-check-input" id="0" value="{{ choice.id }}"
 						disabled />
-					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }} has already been voted off</label>
-				</div>
-				{% else %}
-				<div class="form-group">
-					<input type="radio" name="inc_choice" onclick="disableButton(id, '{{ len }}', 'inc')"
-						class="form-check-input" id="inc{{ forloop.counter }}" value="{{ choice.id }}" />
-					<label for="{{ forloop.counter }}">{{ choice.choice_text }}
-						{% if choice.choice_picture %}
-						<img class="choice-pic" src="{{choice.choice_picture.url}}"/>
-						{% endif %}</label>
-				</div>
-				{% endif %}
-				{% endfor %}
-			</div>
-		</div>
-
-			<div class="col-md-6">
-			<div class="col-sm options">
-				<h2>choose one of the following to remove a point from:</h2>
-				<hr/>
-				{% for choice in contest.choice_set.all %}
-				{% if choice.votes == 0 %}
-				<div class="form-group">
+					</td>
+					<td>
+					<h1><s>{{choice.choice_text}}</s></h1>
+					</td>
+					<td>
 					<input type="radio" name="dec_choice" class="form-check-input" id="0" value="{{ choice.id }}"
 						disabled />
-					<label class="disabled-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }} has already been voted off</label>
+					</td>
+					
 				</div>
-				{% else %}
-				<div class="form-group">
+
+			{% else %}
+
+				<div class="form-inline">
+					<td>
+					<input type="radio" name="inc_choice" onclick="disableButton(id, '{{ len }}', 'inc')"
+						class="form-check-input" id="inc{{ forloop.counter }}" value="{{ choice.id }}" />
+					</td>
+					<td>
+					<h1>{{choice.choice_text}}</h1>
+					</td>
+					<td>
 					<input onclick="disableButton(id, '{{ len }}', 'dec')" type="radio" name="dec_choice"
 						class="form-check-input" id="dec{{ forloop.counter }}" value="{{ choice.id }}" />
-					<label for="{{ forloop.counter }}">
-						{{ choice.choice_text }}
-						{% if choice.choice_picture %}
-						<img class="choice-pic" src="{{choice.choice_picture.url}}"/>
-						{% endif %}</label>
+					</td>
 				</div>
+
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+</div>
+
+		<div class="button-div">
+		<br/>
+		{% if has_started %}
+			{% if not has_ended %}
+				{% if can_vote %}
+					<button id="rv" type="submit" class="btn btn-success">Vote</button>
+					<h1>Contest ends on {{contest.end_date | localize}}</h1>
+				{% else %}
+					<h1>You cannot vote for another {{ gap_minutes }} minutes</h1>
 				{% endif %}
-				{% endfor %}
-			</div>
+			{% else %}
+				<h1>Contest ended on {{contest.end_date | localize}}</h1>
+			{% endif %}
+		{% else %}
+			<h1>Contest will start at {{contest.start_date | localize}}</h1>
+		{% endif %}
 		</div>
-		</div>
-<div class="button-div">
-<br/>
-{% if has_started %}
-{% if not has_ended %}
-{% if can_vote %}
-<button id="rv" type="submit" class="btn btn-success">Vote</button>
-<h1>Contest ends on {{contest.end_date | localize}}</h1>
-{% else %}
-<h1>You cannot vote for another {{ gap_minutes }} minutes</h1>
-{% endif %}
-{% else %}
-<h1>Contest ended on {{contest.end_date | localize}}</h1>
-{% endif %}
-{% else %}
-<h1>Contest will start at {{contest.start_date | localize}}</h1>
-{% endif %}
-</div>
-{% endwith %}
-</form>
-<br/>
-<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' %}">To Public Contests</a>
-<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:mycontests' %}">To My Contests</a>
+		{% endwith %}
+	</form>
+
+	<br/>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' %}">To Public Contests</a>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:mycontests' %}">To My Contests</a>
 </div>
 {% else %}
-<div class="details-div">
-	<h1>You must login or create an account to view the contest details</h1>
-</div>
+	<div class="details-div">
+		<h1>You must login or create an account to view the contest details</h1>
+	</div>
 {% endif %}
 {% endblock %}
