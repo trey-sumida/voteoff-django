@@ -81,12 +81,13 @@ WSGI_APPLICATION = 'voteOff.wsgi.application'
 DATABASES = {
 'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'voteoffdb',
+    'NAME': 'doadmin',
     'USER': 'tsumida',
-    'PASSWORD': 'Underdog24.',
-    'HOST': 'localhost',
-    'PORT': '',
-    }
+    'PASSWORD': 'o3falh3xhv12dpu8',
+    'HOST': 'db-thevoteoff-do-user-7565072-0.a.db.ondigitalocean.com',
+    'PORT': '25060',
+    'database' = 'defaultdb',
+    'sslmode' = 'require',
 }
 
 
