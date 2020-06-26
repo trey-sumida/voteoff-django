@@ -145,6 +145,16 @@ def mycontests(request, key):
             all_contests = list(public_contests)
             for allowed in private_contests:
                 all_contests.append(allowed.contest)
+            # Bubble sort to order the list in newest to oldest created contests
+            unsorted = True
+            while unsorted:
+                unsorted = False
+                for i in range(len(all_contests)-1):
+                    if all_contests[i].pub_date < all_contests[i+1].pub_date:
+                        temp = all_contests[i]
+                        all_contests[i] = all_contests[i+1]
+                        all_contests[i+1] = temp
+                        unsorted = True
             
             paginator = Paginator(all_contests, 5)
             try:
