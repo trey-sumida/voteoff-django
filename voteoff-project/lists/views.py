@@ -231,28 +231,33 @@ def createcontest(request):
 def addusers(request, contest_id):
     if request.user.is_authenticated:
         contest = Contest.objects.get(pk=contest_id)
-        allowed_users = AllowedUsers.objects.filter(contest=contest)
-        if request.method == "GET":
-            if contest.public:
-                raise Http404("Contest is public so specific users cannot be added")
+        if request.user == contest.creator:
+            allowed_users = AllowedUsers.objects.filter(contest=contest)
+            if request.method == "GET":
+                if contest.public:
+                    raise Http404("Contest is public so specific users cannot be added")
+                else:
+                    return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users})
             else:
-                return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users})
+                try:
+                    user = User.objects.get(username__iexact=request.POST['allowed_user'])
+                except:
+                    return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': "User does not exist"})
+                new_allowed_user, created = AllowedUsers.objects.get_or_create(contest=contest, allowed_user=user)
+                new_allowed_user.save()
+                if created:
+                    return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username
+                    + ' was successfully added to the private list'})
+                else:
+                    return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username
+                    + ' has already been added'})
         else:
-            try:
-                user = User.objects.get(username__iexact=request.POST['allowed_user'])
-            except:
-                return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': "User does not exist"})
-            new_allowed_user, created = AllowedUsers.objects.get_or_create(contest=contest, allowed_user=user)
-            new_allowed_user.save()
-            if created:
-                return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username
-                + ' was successfully added to the private list'})
-            else:
-                return render(request, "lists/addusers.html", {'contest': contest, 'allowed_users': allowed_users, 'message': new_allowed_user.allowed_user.username
-                + ' has already been added'})
+            raise Http404("Only the creator of this contest can add users")
     else:
         return render(request, "lists/addusers.html")
+        
 
+# Delete Contests
 def deleteContest(request, contest_id):
     if request.method == "POST":
         if request.user.is_authenticated:
