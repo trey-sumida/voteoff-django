@@ -25,6 +25,14 @@
         class="btn-primary btn-sm"
         >Results</a
       >
+      {% if not contest.public %}
+      <a
+        type="button"
+        href="{% url 'lists:addusers' contest.id %}"
+        class="btn-primary btn-sm"
+        >Add Users</a
+      >
+      {% endif %}
       <a
       type="button"
       href="{% url 'lists:deleteContest' contest.id %}"
