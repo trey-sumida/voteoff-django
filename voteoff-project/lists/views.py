@@ -155,7 +155,7 @@ def mycontests(request, key):
                         all_contests[i] = all_contests[i+1]
                         all_contests[i+1] = temp
                         unsorted = True
-            
+           
             paginator = Paginator(all_contests, 5)
             try:
                 page = int(request.GET.get("page", "1"))
@@ -167,6 +167,47 @@ def mycontests(request, key):
             except:
                 contests = paginator.page(paginator.num_pages)
 
+            return render(request, "lists/mycontests.html", {"contests": contests})
+        elif key == "created":
+            created_contests = Contest.objects.filter(creator=request.user, public=True)
+            latest_contest_list = created_contests.all().order_by("-pub_date")
+            paginator = Paginator(latest_contest_list, 5)
+            try:
+                page = int(request.GET.get("page", "1"))
+            except:
+                page = 1
+
+            try:
+                contests = paginator.page(page)
+            except:
+                contests = paginator.page(paginator.num_pages)
+            return render(request, "lists/mycontests.html", {"contests": contests})
+        elif key == "private":
+            private_contests = AllowedUsers.objects.filter(allowed_user=request.user)
+            all_contests = []
+            for allowed in private_contests:
+                all_contests.append(allowed.contest)
+            # Bubble sort to order the list in newest to oldest created contests
+            unsorted = True
+            while unsorted:
+                unsorted = False
+                for i in range(len(all_contests)-1):
+                    if all_contests[i].pub_date < all_contests[i+1].pub_date:
+                        temp = all_contests[i]
+                        all_contests[i] = all_contests[i+1]
+                        all_contests[i+1] = temp
+                        unsorted = True
+                        
+            paginator = Paginator(all_contests, 5)
+            try:
+                page = int(request.GET.get("page", "1"))
+            except:
+                page = 1
+
+            try:
+                contests = paginator.page(page)
+            except:
+                contests = paginator.page(paginator.num_pages)
             return render(request, "lists/mycontests.html", {"contests": contests})
     else:
         raise Http404("You must be logged in to view your contests.")

@@ -3,6 +3,9 @@
 {% endblock %} {% block content %}
 <div class="padding">
   <h1 class="text-center mb-3">My Contests</h1>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:mycontests' 'all' %}">All</a>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:mycontests' 'created' %}">Created</a>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:mycontests' 'private' %}">Private</a>
   {% if contests %} 
   {% for contest in contests.object_list %}
   <div class="card mb-3">
