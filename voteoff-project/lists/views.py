@@ -74,6 +74,8 @@ def results(request, contest_id):
 def vote(request, contest_id):
     if request.user.is_authenticated:
         contest = get_object_or_404(Contest, pk=contest_id)
+        if timezone.now() > contest.end_date:
+            raise Http404("The contests ended before you submitted your vote.")
         try:
             increment_choice = contest.choice_set.get(pk=request.POST["inc_choice"])
             decrement_choice = contest.choice_set.get(pk=request.POST["dec_choice"])
