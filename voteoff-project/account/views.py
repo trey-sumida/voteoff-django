@@ -53,7 +53,7 @@ def loginuser(request):
             return render(request, 'account/login.html', {'form':AuthenticationForm(), 'error':'Username and password did not match'})
         else:
             login(request, user)
-            return redirect('lists:mycontests')
+            return redirect('lists:mycontests', 'all')
 
 def userprofile(request):
     if request.user.is_authenticated:
