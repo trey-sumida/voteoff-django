@@ -137,24 +137,29 @@ def vote(request, contest_id):
         return render(request, "lists/detail.html")
 
 # Displays the contests that the user created
-def mycontests(request):
+def mycontests(request, key):
     if request.user.is_authenticated:
-        my_contests = Contest.objects.filter(creator=request.user)
-        latest_contest_list = my_contests.all().order_by("-pub_date")
-        paginator = Paginator(latest_contest_list, 5)
-        try:
-            page = int(request.GET.get("page", "1"))
-        except:
-            page = 1
+        if key == "all":
+            public_contests = Contest.objects.filter(creator=request.user, public=True)
+            private_contests = AllowedUsers.objects.filter(allowed_user=request.user)
+            all_contests = list(public_contests)
+            for allowed in private_contests:
+                all_contests.append(allowed.contest)
+            
+            paginator = Paginator(all_contests, 5)
+            try:
+                page = int(request.GET.get("page", "1"))
+            except:
+                page = 1
 
-        try:
-            contests = paginator.page(page)
-        except:
-            contests = paginator.page(paginator.num_pages)
+            try:
+                contests = paginator.page(page)
+            except:
+                contests = paginator.page(paginator.num_pages)
 
-        return render(request, "lists/mycontests.html", {"contests": contests})
+            return render(request, "lists/mycontests.html", {"contests": contests})
     else:
-        return render(request, "lists/mycontests.html")
+        raise Http404("You must be logged in to view your contests.")
 
 
 # Allows user to create a contest

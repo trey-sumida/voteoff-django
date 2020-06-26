@@ -3,7 +3,6 @@
 {% endblock %} {% block content %}
 <div class="padding">
   <h1 class="text-center mb-3">My Contests</h1>
-  {% if user.is_authenticated %} 
   {% if contests %} 
   {% for contest in contests.object_list %}
   <div class="card mb-3">
@@ -72,8 +71,5 @@
       {% endif %}
     </ul>
   </nav>
-  {% else %}
-  <h1>You must login to view your Contests</h1>
-  {% endif %}
 </div>
 {% endblock %}
