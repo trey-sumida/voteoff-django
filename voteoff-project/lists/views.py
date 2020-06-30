@@ -322,7 +322,7 @@ def deleteContest(request, contest_id):
             contest = Contest.objects.get(pk=contest_id)
             if contest.creator == request.user:
                 contest.delete()
-                return redirect("lists:mycontests")
+                return redirect("lists:mycontests", key="all")
             else:
                 raise Http404("You are not authorized to delete this contest")
         else:

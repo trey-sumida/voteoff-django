@@ -35,10 +35,13 @@
         >Add Users</a
       >
       {% endif %}
+      
+      {% if user == contest.creator %}
       <a
       type="button"
       href="{% url 'lists:deleteContest' contest.id %}"
       class="btn-primary btn-sm">Delete</a>
+    {% endif %}
     </div>
   </div>
   {% endfor %}

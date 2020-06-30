@@ -14,7 +14,7 @@
         <h1>Are you sure you would like to delete the contest: {{contest.contest_title}}?</h1>
           <button type="submit" class="btn btn-primary">Confirm</button>
     </form>
-    <a class="btn btn-secondary" href="{% url 'lists:mycontests' %}">Back To My Contests</a>
+    <a class="btn btn-secondary" href="{% url 'lists:mycontests' 'all' %}">Back To My Contests</a>
 {% else %}
 <div class="details-div">
     <h1>You must login to delete contests to a contest</h1>
