@@ -6,6 +6,9 @@
 {% block content %}
 <div class="padding">
   <h1 class="text-center mb-3">Public Contests</h1>
+  <a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' 'ongoing' %}">Ongoing</a>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' 'upcoming' %}">Upcoming</a>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' 'ended' %}">Completed</a>
   {% if contests %} 
   {% for contest in contests.object_list %}
   <div class="card mb-3">

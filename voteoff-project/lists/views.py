@@ -9,13 +9,22 @@ from .forms import ContestForm
 from account.models import Account as User
 
 # Get contests and display them
-def index(request):
+def index(request, key):
     user_contests = Contest.objects.filter(public=True)
     ordered_contests = list(user_contests.all().order_by("-pub_date"))
     latest_contest_list = []
-    for cont in ordered_contests:
-        if cont.end_date > timezone.now():
-            latest_contest_list.append(cont)
+    if key == "ended":
+        for cont in ordered_contests:
+            if cont.end_date < timezone.now():
+                latest_contest_list.append(cont)
+    elif key == "upcoming":
+        for cont in ordered_contests:
+            if cont.start_date > timezone.now():
+                latest_contest_list.append(cont)
+    elif key == "ongoing":
+        for cont in ordered_contests:
+            if cont.end_date > timezone.now() and cont.start_date < timezone.now():
+                latest_contest_list.append(cont)
     paginator = Paginator(latest_contest_list, 5)
     try:
         page = int(request.GET.get("page", "1"))

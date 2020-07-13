@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'lists'
 urlpatterns = [
-    path('lists/', views.index, name='index'),
+    path('lists/<str:key>/', views.index, name='index'),
     path('lists/create', views.createcontest, name='createcontest'),
     path('lists/mycontests/<str:key>/', views.mycontests, name='mycontests'),
     path('lists/details/<int:contest_id>/', views.detail, name='detail'),

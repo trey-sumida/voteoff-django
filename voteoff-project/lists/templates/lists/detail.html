@@ -91,7 +91,7 @@
 	</form>
 
 	<br/>
-	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' %}">To Public Contests</a>
+	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:index' 'ongoing' %}">To Public Contests</a>
 	<a class="btn btn-secondary btn-sm mb-3" href="{% url 'lists:mycontests' 'all' %}">To My Contests</a>
 </div>
 {% else %}
