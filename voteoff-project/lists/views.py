@@ -11,7 +11,11 @@ from account.models import Account as User
 # Get contests and display them
 def index(request):
     user_contests = Contest.objects.filter(public=True)
-    latest_contest_list = user_contests.all().order_by("-pub_date")
+    ordered_contests = list(user_contests.all().order_by("-pub_date"))
+    latest_contest_list = []
+    for cont in ordered_contests:
+        if cont.end_date > timezone.now():
+            latest_contest_list.append(cont)
     paginator = Paginator(latest_contest_list, 5)
     try:
         page = int(request.GET.get("page", "1"))
