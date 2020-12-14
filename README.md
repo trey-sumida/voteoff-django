@@ -6,6 +6,7 @@
 
 ## Running The VoteOff
 - Clone the repository
+- Download the local settings file [here](https://www.treysumida.com/media/portfolio/files/local_settings.py) and add it to the `voteoff-django/voteoff-project/voteOff` directory where the settings.py file is also located
 - Change directories into the `voteoff-django` directory
 - Run `pipenv shell` to start the virtual environment
 - Change directories into the `voteoff-project` directory
